@@ -1,0 +1,30 @@
+<head>
+  <meta http-equiv="Content-Security-Policy" content="frame-src 'self' unifiedconsent.osano.com"> 
+<script type="text/javascript" src="https://s.uc.osano.com/sdk/latest.min.js" crossorigin="anonymous"></script> 
+<script type="text/javascript" crossorigin="anonymous"> 
+   const { UnifiedConsentByOsanoSDK } = window.unifiedConsentJsSdk 
+   if(window.navigator.globalPrivacyControl) { 
+     UnifiedConsentByOsanoSDK.getToken({ 
+       issuer: 'https://uc.api.osano.com/v2/token/create', 
+       configId: '8834de69-269c-45ae-a275-0e0b54cfd817', 
+       customerId: 'AzZcpvRm9bbsqngN', 
+     }).then(token => { 
+       UnifiedConsentByOsanoSDK.registerPrivacyProtocols({ 
+         apiUrl: 'https://uc.api.osano.com/v2/', 
+         token 
+       }) 
+     }) 
+   } 
+</script>
+</head>
+
+<body>
+  <h1>Christie's Testing Ground</h1>
+  <p>Welcome to UC World</p>
+  <iframe id="osano-uc-iframe" src="https://unifiedconsent.osano.com/1034/"></iframe> 
+<script type="text/javascript" crossorigin="anonymous"> 
+   window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.initEmbeddedParent({ 
+     targetIframe: document.getElementById('osano-uc-iframe') 
+   }); 
+</script>
+</body>
