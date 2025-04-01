@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Consent</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+  
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dsar.html">Data Subject Requests</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Unified Consent</h2>
+        <iframe id="osano-uc-iframe" src="https://unifiedconsent.osano.com/1034/"></iframe>
+        <script type="text/javascript">
+            window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.initEmbeddedParent({
+                targetIframe: document.getElementById('osano-uc-iframe')
+            });
+        </script>
+    </main>
+
+    <footer>
+        <a href="https://osano.com/cookie-preferences">Cookie Preferences</a> |
+        <a href="https://unifiedconsent.osano.com/1034/">Unified Consent Hub</a> |
+        <a href="https://my.datasubject.com/AzZcpvRm9bbsqngN/50113" target="_blank">DSAR Form</a>
+    </footer>
+</body>
+</html>
