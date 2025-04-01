@@ -1,6 +1,11 @@
 <head>
 <!-- Add CSP -->
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' blob: http: https: 'unsafe-inline';">
+<meta http-equiv="Content-Security-Policy" content="
+    script-src 'self' https://*.osano.com blob: 'unsafe-inline'; 
+    style-src 'self' 'unsafe-inline' https://*.osano.com; 
+    frame-src 'self' https://*.osano.com; 
+    connect-src 'self' https://*.osano.com;
+    worker-src 'self' blob:;">
     
 <!-- Add Osano Unified Consent iFrame Styling -->
     <style>
