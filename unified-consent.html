@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unified Consent</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-  
 <body>
     <header>
         <nav>
@@ -20,7 +19,8 @@
     <main>
         <h2>Unified Consent</h2>
         <iframe id="osano-uc-iframe" src="https://unifiedconsent.osano.com/1034/"></iframe>
-        <script type="text/javascript">
+
+        <script type="text/javascript" crossorigin="anonymous">
             window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.initEmbeddedParent({
                 targetIframe: document.getElementById('osano-uc-iframe')
             });
