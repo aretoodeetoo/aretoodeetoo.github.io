@@ -1,8 +1,9 @@
+<html lang="en">
 <head>
 <!-- Link to CSS stylesheet -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
+    <title>Osano Product Demo</title>
     <link rel="stylesheet" href="css/styles.css">
 
 <!-- Add CSP -->
@@ -48,6 +49,28 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="unified-consent.html">Unified Consent</a></li>
+                <li><a href="dsar.html">Data Subject Requests</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to Christie's Testing Ground</h1>
+        <p>Select a tab above to view content.</p>
+    </main>
+
+    <footer>
+        <a href="https://osano.com/cookie-preferences">Cookie Preferences</a> |
+        <a href="https://unifiedconsent.osano.com/1034/">Unified Consent Hub</a> |
+        <a href="https://my.datasubject.com/AzZcpvRm9bbsqngN/50113" target="_blank">DSAR Form</a>
+    </footer>
+</body>
+
+<!-- <body>
   <h1>Christie's Testing Ground</h1>
     <h2>Data Subject Access Requests</h2>
         <a href="https://my.datasubject.com/AzZcpvRm9bbsqngN/50113" target="_blank">Access the DSAR Form Here</a>
@@ -63,4 +86,6 @@
 <!--     Add DSAR Form -->
 <script type="text/javascript"> (function(w,d){ var i = "osno-dsar-form_"+(new Date()).getTime(); var t = w.addEventListener ? ["addEventListener","message"] : ["attachEvent","onmessage"]; w[t[0]](t[1], function(e) { var f = d.getElementById(i); if (e.source && e.origin && e.source === f.contentWindow && e.origin === "https://my.datasubject.com") f.style.cssText = "height:" + e.data + "px;min-width:100%"; }, false); d.write('<iframe frameborder="0" id="'+i+'" src="https://my.datasubject.com/AzZcpvRm9bbsqngN/50113" width="100%" height="0" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>'); })(window, document);</script>
 
-</body>
+</body> -->
+
+</html>
