@@ -62,8 +62,32 @@ main {
 /* iFrame Styling */
 iframe {
     width: 80%;
-    height: 75vh; /* Adjusted for*
+    height: 75vh; /* Adjusted for layout */
+    border: 2px solid #ccc;
+}
 
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+/* Footer Links */
+footer a {
+    color: #f9f9f9;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
 
 /* body {
     font-family: Arial, sans-serif;
