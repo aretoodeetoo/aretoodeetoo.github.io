@@ -8,20 +8,27 @@
 
     <script type="text/javascript" src="https://s.uc.osano.com/sdk/latest.min.js" crossorigin="anonymous"></script> 
     <script type="text/javascript" crossorigin="anonymous"> 
-   const { UnifiedConsentByOsanoSDK } = window.unifiedConsentJsSdk 
-   if(window.navigator.globalPrivacyControl) { 
-     UnifiedConsentByOsanoSDK.getToken({ 
-       issuer: 'https://uc.api.osano.com/v2/token/create', 
-       configId: '8834de69-269c-45ae-a275-0e0b54cfd817', 
-       customerId: 'AzZcpvRm9bbsqngN', 
-     }).then(token => { 
-       UnifiedConsentByOsanoSDK.registerPrivacyProtocols({ 
-         apiUrl: 'https://uc.api.osano.com/v2/', 
-         token 
-       }) 
-     }) 
-   } 
-</script>
+       const { UnifiedConsentByOsanoSDK } = window.unifiedConsentJsSdk 
+       if(window.navigator.globalPrivacyControl) { 
+         UnifiedConsentByOsanoSDK.getToken({ 
+           issuer: 'https://uc.api.osano.com/v2/token/create', 
+           configId: '8834de69-269c-45ae-a275-0e0b54cfd817', 
+           customerId: 'AzZcpvRm9bbsqngN', 
+         }).then(token => { 
+           UnifiedConsentByOsanoSDK.registerPrivacyProtocols({ 
+             apiUrl: 'https://uc.api.osano.com/v2/', 
+             token 
+           }) 
+         }) 
+       } 
+    </script>
+
+<!-- Add Osano CMP Consent Prompt Dialog for VPPA -->
+    <script
+         data-config-id="4d45f995-b92c-4181-81f5-1de17d8b8499"
+         data-customer-id="AzZcpvRm9bbsqngN"
+         src="https://clientapps.osano.com/uc-opt/index.js"
+    ></script>
 </head>
     
 <body>
