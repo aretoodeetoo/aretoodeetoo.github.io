@@ -8,25 +8,22 @@
 
 <!-- Add CSP -->
 <meta http-equiv="Content-Security-Policy" content="
-    script-src 'self' https://*.osano.com blob: 'unsafe-inline'; 
-    style-src 'self' 'unsafe-inline' https://*.osano.com; 
+    script-src 'self' https://*.osano.com https://my.datasubject.com blob: 'unsafe-inline'; 
+    style-src 'self' 'unsafe-inline' https://*.osano.com https://my.datasubject.com; 
     frame-src 'self' https://*.osano.com https://my.datasubject.com unifiedconsent.osano.com; 
-    connect-src 'self' https://*.osano.com; 
+    connect-src 'self' https://*.osano.com https://my.datasubject.com; 
     worker-src 'self' blob:;">
-
-    
-<!-- Add Osano Unified Consent iFrame Styling -->
-    <style>
-        iframe {
-            width: 80%;
-            height: 75%;
-            border: 2px solid #ccc;
-        }
-    </style>
 
 <!--     Add Osano CMP Script -->
     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
 
+<!-- Add Osano CMP Consent Prompt Dialog for VPPA -->
+    <script
+     data-config-id="4d45f995-b92c-4181-81f5-1de17d8b8499"
+     data-customer-id="AzZcpvRm9bbsqngN"
+     src="https://clientapps.osano.com/uc-opt/index.js"
+    ></script>
+    
 <!-- Add Osano Unified Consent -->
     <meta http-equiv="Content-Security-Policy" content="frame-src 'self' unifiedconsent.osano.com"> 
     
