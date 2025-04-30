@@ -32,12 +32,13 @@
       'us-de', 'us-nj', 'us-ne'
     ];
 
-    window.Osano('onInitialized', function () {
-      const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-      if (!allowedJurisdictions.includes(jurisdiction)) {
-        window.Osano.cm.hideDialog();
+        setTimeout(function () {
+          const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
+          if (!allowedJurisdictions.includes(jurisdiction)) {
+            window.Osano.cm.hideDialog();
       }
-    });
+    }, 250);
+    );
   </script>
 
 <!-- Step 4: Load the Osano CMP Script -->
