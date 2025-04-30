@@ -14,24 +14,6 @@ const suppressedJurisdictions = [
   'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri'
   // Add or remove based on current legislation updates
 ];
-
-// Immediately hide Osano UI with CSS to prevent flicker
-// Preload Osano API
-(function (w, o, d) {
-  w[o] = w[o] || function () { w[o][d].push(arguments); };
-  w[o][d] = w[o][d] || [];
-})(window, 'Osano', 'data');
-
-// List of U.S. jurisdictions where privacy law is *not* active (suppress banner here)
-const suppressedJurisdictions = [
-  'us-fl', 'us-ga', 'us-al', 'us-az', 'us-ar', 'us-ks',
-  'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
-  'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
-  'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
-  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri'
-  // Adjust as laws change
-];
-
 // Step 1: Block Osano UI before it flashes
 const style = document.createElement('style');
 style.id = 'osano-css-block';
