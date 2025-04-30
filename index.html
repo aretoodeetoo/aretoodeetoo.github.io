@@ -16,42 +16,29 @@
 
 <!-- Add custom code to display Osano banner only in select locations -->
 <!-- Step 1: Initialize Osano's pre-load hook -->
-<script>
-  (function (w, o, d) {
-    w[o] =
-      w[o] ||
-      function () {
-        w[o][d].push(arguments);
-      };
-    w[o][d] = w[o][d] || [];
-  })(window, 'Osano', 'data');
+  <script>
+    (function (w, o, d) {
+      w[o] =
+        w[o] ||
+        function () {
+          w[o][d].push(arguments);
+        };
+      w[o][d] = w[o][d] || [];
+    })(window, 'Osano', 'data');
 
-  // Step 2: Customize allowed jurisdictions (e.g., US states or full countries)
-  const allowedJurisdictions = [
-    'us-ca', // California
-    'us-co', // Colorado
-    'us-ct', // Connecticut
-    'us-va', // Virginia
-    'us-ut', // Utah
-    'us-tx', // Texas
-    'us-or', // Oregon
-    'us-mt', // Montana
-    'us-ia', // Iowa
-    'us-nh', // New Hampshire
-    'us-de', // Delaware
-    'us-nj', // New Jersey
-    'us-ne'  // Nebraska
-    // Add more as needed (e.g., 'de' for Germany, 'fr' for France)
-  ];
+    const allowedJurisdictions = [
+      'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
+      'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
+      'us-de', 'us-nj', 'us-ne'
+    ];
 
-  // Step 3: Use Osano API to hide the banner if user isn't in an allowed jurisdiction
-  window.Osano('onInitialized', function () {
-    const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-    if (!allowedJurisdictions.includes(jurisdiction)) {
-      window.Osano.cm.hideDialog(); // Hide the banner if not in allowed location
-    }
-  });
-</script>
+    window.Osano('onInitialized', function () {
+      const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
+      if (!allowedJurisdictions.includes(jurisdiction)) {
+        window.Osano.cm.hideDialog();
+      }
+    });
+  </script>
 
 <!-- Step 4: Load the Osano CMP Script -->
 <!-- Add Osano CMP Script -->
