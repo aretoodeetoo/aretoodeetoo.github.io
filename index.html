@@ -14,34 +14,9 @@
         connect-src 'self' https://*.osano.com https://my.datasubject.com; 
         worker-src 'self' blob:;">
 
-<!-- Add custom code to display Osano banner only in select locations -->
-<!-- Step 1: Initialize Osano's pre-load hook -->
-  <script>
-    (function (w, o, d) {
-      w[o] =
-        w[o] ||
-        function () {
-          w[o][d].push(arguments);
-        };
-      w[o][d] = w[o][d] || [];
-    })(window, 'Osano', 'data');
+    
+    <script src="index.js"></script>
 
-    const allowedJurisdictions = [
-      'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
-      'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
-      'us-de', 'us-nj', 'us-ne'
-    ];
-
-        setTimeout(function () {
-          const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-          if (!allowedJurisdictions.includes(jurisdiction)) {
-            window.Osano.cm.hideDialog();
-      }
-    }, 250);
-    );
-  </script>
-
-<!-- Step 4: Load the Osano CMP Script -->
 <!-- Add Osano CMP Script -->
     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
 
