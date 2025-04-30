@@ -1,48 +1,50 @@
 // OSANO JS API function to hide banner in unwanted locales
-// Preload Osano API
+// Step 1: Preload Osano API
 (function (w, o, d) {
   w[o] = w[o] || function () { w[o][d].push(arguments); };
   w[o][d] = w[o][d] || [];
 })(window, 'Osano', 'data');
 
-// List of US states where privacy laws are NOT active, and banner should be suppressed
+// Step 2: Define suppressed jurisdictions (no banner shown here)
 const suppressedJurisdictions = [
   'us-fl', 'us-ga', 'us-al', 'us-az', 'us-ar', 'us-ks',
   'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
   'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
   'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
-  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'us-tx'
-  // Add or remove based on current legislation updates
+  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'us-tx',
 ];
-// Step 1: Block Osano UI before it flashes
-const style = document.createElement('style');
-style.id = 'osano-css-block';
-style.innerHTML = `
-  #osano-cm-dialog,
-  #osano-cm-widget,
-  #osano-cm-drawer {
-    display: none !important;
-  }
-`;
-document.head.appendChild(style);
 
-// Step 2: On Osano initialization, assess location and show or suppress banner
-window.Osano('onInitialized', function () {
+// Step 3: Set up observer to hide banner UI if needed
+let suppressBanner = false;
+
+const hideBannerUI = () => {
+  const dialog = document.getElementById('osano-cm-dialog');
+  const widget = document.getElementById('osano-cm-widget');
+  const drawer = document.getElementById('osano-cm-drawer');
+
+  if (dialog) { dialog.style.display = 'none'; console.log('Hid dialog'); }
+  if (widget) { widget.style.display = 'none'; console.log('Hid widget'); }
+  if (drawer) { drawer.style.display = 'none'; console.log('Hid drawer'); }
+};
+
+const observer = new MutationObserver(() => {
+  if (suppressBanner) hideBannerUI();
+});
+observer.observe(document.body, { childList: true, subtree: true });
+
+// Step 4: On Osano init, check location and act
+window.Osano('onInitialized', () => {
   const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-  console.log('Detected jurisdiction:', jurisdiction);
+  console.log('Jurisdiction:', jurisdiction);
 
-  const isSuppressed = suppressedJurisdictions.includes(jurisdiction);
+  suppressBanner = suppressedJurisdictions.includes(jurisdiction);
 
-  if (!isSuppressed) {
-    // ✅ Show banner: remove CSS and explicitly trigger
-    const hideStyle = document.getElementById('osano-css-block');
-    if (hideStyle) hideStyle.remove();
-
-    window.Osano.cm.showDialog(); // <--- Key addition here
-    console.log('Osano banner shown via showDialog().');
+  if (suppressBanner) {
+    console.log('Banner suppressed for this location.');
   } else {
-    // 🚫 Keep it secret, keep it safe
-    console.log('Osano banner suppressed due to jurisdiction.');
+    console.log('Showing banner for this location.');
+    observer.disconnect(); // No need to watch anymore
+    window.Osano.cm.showDialog();
   }
 });
 
