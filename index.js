@@ -1,42 +1,47 @@
 // OSANO JS API function to hide banner in unwanted locales
-// Preload hook for Osano CMP
+// Preload Osano API
 (function (w, o, d) {
-  w[o] =
-    w[o] ||
-    function () {
-      w[o][d].push(arguments);
-    };
+  w[o] = w[o] || function () { w[o][d].push(arguments); };
   w[o][d] = w[o][d] || [];
 })(window, 'Osano', 'data');
 
-// ✅ Use full ISO 3166-2 jurisdiction codes as returned by Osano
-const allowedJurisdictions = [
-  'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
-  'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
-  'us-de', 'us-nj', 'us-ne'
+// List of US states where privacy laws are NOT active, and banner should be suppressed
+const suppressedJurisdictions = [
+  'us-fl', 'us-ga', 'us-al', 'us-az', 'us-ar', 'us-ks',
+  'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
+  'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
+  'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
+  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri'
+  // Add or remove based on current legislation updates
 ];
 
-// Step 1: Hide Osano UI elements to prevent flicker
+// Immediately hide Osano UI with CSS to prevent flicker
 const style = document.createElement('style');
+style.id = 'osano-css-block';
 style.innerHTML = `
-  #osano-cm-widget,
   #osano-cm-dialog,
+  #osano-cm-widget,
   #osano-cm-drawer {
     display: none !important;
   }
 `;
 document.head.appendChild(style);
 
-// Step 2: After Osano initializes, check full jurisdiction
+// Once Osano is initialized, check jurisdiction and toggle visibility
 window.Osano('onInitialized', function () {
   const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-  console.log('Detected jurisdiction:', jurisdiction);
+  console.log('Jurisdiction:', jurisdiction);
 
-  if (allowedJurisdictions.includes(jurisdiction)) {
-    // Show dialog if jurisdiction is in the approved list
-    window.Osano.cm.showDialog();
+  if (!suppressedJurisdictions.includes(jurisdiction)) {
+    // User is in a banner-eligible location, so remove the CSS that hides it
+    const hideStyle = document.getElementById('osano-css-block');
+    if (hideStyle) {
+      hideStyle.remove();
+    }
+    console.log('Osano banner shown.');
   } else {
-    console.log('Banner suppressed for non-target jurisdiction');
+    // User is in a suppressed location; keep banner hidden
+    console.log('Osano banner suppressed due to jurisdiction.');
   }
 });
 
