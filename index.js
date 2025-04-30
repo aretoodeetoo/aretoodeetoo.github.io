@@ -1,46 +1,48 @@
 // OSANO JS API function to hide banner in unwanted locales
-// <!-- Step 1: Preload hook + suppress flag -->
-<script>
-  (function (w, o, d) {
-    w[o] =
-      w[o] ||
-      function () {
-        w[o][d].push(arguments);
-      };
-    w[o][d] = w[o][d] || [];
-  })(window, 'Osano', 'data');
+// Preload hook for Osano CMP
+(function (w, o, d) {
+  w[o] =
+    w[o] ||
+    function () {
+      w[o][d].push(arguments);
+    };
+  w[o][d] = w[o][d] || [];
+})(window, 'Osano', 'data');
 
-  // Suppress auto-display of the dialog initially
-  window.Osano('onInitialized', function () {
-    const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-    const state = jurisdiction.split('-')[1];
-    console.log('Detected jurisdiction:', jurisdiction);
+// ✅ Use full ISO 3166-2 jurisdiction codes as returned by Osano
+const allowedJurisdictions = [
+  'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
+  'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
+  'us-de', 'us-nj', 'us-ne'
+];
 
-    const allowedStates = [
-      'ca', 'co', 'ct', 'va', 'ut', 'tx', 'or', 'mt',
-      'ia', 'nh', 'de', 'nj', 'ne'
-    ];
+// Step 1: Hide Osano UI elements to prevent flicker
+const style = document.createElement('style');
+style.innerHTML = `
+  #osano-cm-widget,
+  #osano-cm-dialog,
+  #osano-cm-drawer {
+    display: none !important;
+  }
+`;
+document.head.appendChild(style);
 
-    if (!allowedStates.includes(state)) {
-      // Hide dialog if not in an allowed location
-      window.Osano.cm.hideDialog();
-    }
-  });
+// Step 2: After Osano initializes, check full jurisdiction
+window.Osano('onInitialized', function () {
+  const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
+  console.log('Detected jurisdiction:', jurisdiction);
 
-  // Pre-emptively hide the banner via CSS to avoid flash
-  const style = document.createElement('style');
-  style.innerHTML = `
-    #osano-cm-widget, #osano-cm-dialog, #osano-cm-drawer {
-      display: none !important;
-    }
-  `;
-  document.head.appendChild(style);
+  if (allowedJurisdictions.includes(jurisdiction)) {
+    // Show dialog if jurisdiction is in the approved list
+    window.Osano.cm.showDialog();
+  } else {
+    console.log('Banner suppressed for non-target jurisdiction');
+  }
+});
 
-  // Then allow Osano to show UI later via JS if allowed
-</script>
 
 // <!-- Step 2: Load Osano CMP -->
-<script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
+// <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
 
 
 
