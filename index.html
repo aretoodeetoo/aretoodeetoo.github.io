@@ -15,11 +15,45 @@
         worker-src 'self' blob:;">
 
 <!-- Add custom code to display Osano banner only in select locations -->
-    <script>
-        ;(function(w,o,d){w[o]=w[o]||function(){w[o][d].push(arguments)};w[o][d]=w[o][d]||[]})(window,'Osano','data');
-        window.Osano('onInitialized',function(){var e=(window.Osano.cm.jurisdiction||'').split('-')[1],t='ca,co,ct,va,ut,tx,or,mt,ia,nh,de,nj,ne'.split(',').map(function(e){return e.toLowerCase().trim();});-1===t.indexOf(e)&&window.Osano.cm.hideDialog();});
-    </script>
+<!-- Step 1: Initialize Osano's pre-load hook -->
+<script>
+  (function (w, o, d) {
+    w[o] =
+      w[o] ||
+      function () {
+        w[o][d].push(arguments);
+      };
+    w[o][d] = w[o][d] || [];
+  })(window, 'Osano', 'data');
 
+  // Step 2: Customize allowed jurisdictions (e.g., US states or full countries)
+  const allowedJurisdictions = [
+    'us-ca', // California
+    'us-co', // Colorado
+    'us-ct', // Connecticut
+    'us-va', // Virginia
+    'us-ut', // Utah
+    'us-tx', // Texas
+    'us-or', // Oregon
+    'us-mt', // Montana
+    'us-ia', // Iowa
+    'us-nh', // New Hampshire
+    'us-de', // Delaware
+    'us-nj', // New Jersey
+    'us-ne'  // Nebraska
+    // Add more as needed (e.g., 'de' for Germany, 'fr' for France)
+  ];
+
+  // Step 3: Use Osano API to hide the banner if user isn't in an allowed jurisdiction
+  window.Osano('onInitialized', function () {
+    const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
+    if (!allowedJurisdictions.includes(jurisdiction)) {
+      window.Osano.cm.hideDialog(); // Hide the banner if not in allowed location
+    }
+  });
+</script>
+
+<!-- Step 4: Load the Osano CMP Script -->
 <!-- Add Osano CMP Script -->
     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
 
