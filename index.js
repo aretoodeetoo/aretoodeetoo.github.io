@@ -5,49 +5,50 @@
   w[o][d] = w[o][d] || [];
 })(window, 'Osano', 'data');
 
-// Step 2: Define suppressed jurisdictions (no banner shown here)
+// Step 2: Jurisdictions where banner should NOT appear
 const suppressedJurisdictions = [
   'us-fl', 'us-ga', 'us-al', 'us-az', 'us-ar', 'us-ks',
   'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
   'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
   'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
-  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'us-tx',
+  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'ux-tx',
 ];
 
-// Step 3: Set up observer to hide banner UI if needed
-let suppressBanner = false;
-
-const hideBannerUI = () => {
-  const dialog = document.getElementById('osano-cm-dialog');
-  const widget = document.getElementById('osano-cm-widget');
-  const drawer = document.getElementById('osano-cm-drawer');
-
-  if (dialog) { dialog.style.display = 'none'; console.log('Hid dialog'); }
-  if (widget) { widget.style.display = 'none'; console.log('Hid widget'); }
-  if (drawer) { drawer.style.display = 'none'; console.log('Hid drawer'); }
-};
-
-const observer = new MutationObserver(() => {
-  if (suppressBanner) hideBannerUI();
-});
-observer.observe(document.body, { childList: true, subtree: true });
-
-// Step 4: On Osano init, check location and act
-window.Osano('onInitialized', () => {
+// Step 3: When Osano is ready, determine if we need to suppress banner
+window.Osano('onInitialized', function () {
   const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
   console.log('Jurisdiction:', jurisdiction);
 
-  suppressBanner = suppressedJurisdictions.includes(jurisdiction);
+  const suppress = suppressedJurisdictions.includes(jurisdiction);
 
-  if (suppressBanner) {
-    console.log('Banner suppressed for this location.');
+  if (suppress) {
+    console.log('Suppressing banner for jurisdiction:', jurisdiction);
+
+    // Listen for when Osano tries to show any UI
+    window.Osano('onUiChanged', (component, state) => {
+      if (state === 'show') {
+        const style = document.createElement('style');
+        style.id = 'osano-banner-blocker';
+        style.innerHTML = `
+          #osano-cm-dialog,
+          #osano-cm-drawer,
+          #osano-cm-widget {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+        console.log(`Blocked Osano ${component} via injected style.`);
+      }
+    });
+
   } else {
-    console.log('Showing banner for this location.');
-    observer.disconnect(); // No need to watch anymore
+    console.log('Showing banner via showDialog()');
     window.Osano.cm.showDialog();
   }
 });
-
 
 
 // <!-- Step 2: Load Osano CMP -->
