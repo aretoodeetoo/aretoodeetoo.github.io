@@ -14,8 +14,8 @@
         connect-src 'self' https://*.osano.com https://my.datasubject.com; 
         worker-src 'self' blob:;">
 
-<!-- Add custom code to display Osano banner only in select locations
-    <script> -->
+<!-- Add custom code to display Osano banner only in select locations -->
+    <script>
         ;(function(w,o,d){w[o]=w[o]||function(){w[o][d].push(arguments)};w[o][d]=w[o][d]||[]})(window,'Osano','data');
         window.Osano('onInitialized',function(){var e=(window.Osano.cm.jurisdiction||'').split('-')[1],t='ca,co,ct,va,ut,tx,or,mt,ia,nh,de,nj,ne'.split(',').map(function(e){return e.toLowerCase().trim();});-1===t.indexOf(e)&&window.Osano.cm.hideDialog();});
     </script>
