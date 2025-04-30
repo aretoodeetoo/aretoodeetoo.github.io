@@ -1,26 +1,39 @@
 // Function to call the Osano JavaScript API & allow banner suppression
 
-(function (w, o, d) {
-  w[o] =
-    w[o] ||
-    function () {
-      w[o][d].push(arguments);
-    };
-  w[o][d] = w[o][d] || [];
-})(window, 'Osano', 'data');
-
+// index.js
 const allowedJurisdictions = [
-  'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
-  'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
-  'us-de', 'us-nj', 'us-ne'
+  'US-CA', 'US-CO', 'US-CT', 'US-VA', 'US-UT',
+  'US-TX', 'US-OR', 'US-MT', 'US-IA', 'US-NH',
+  'US-DE', 'US-NJ', 'US-NE'
 ];
 
-window.Osano('onInitialized', function () {
-  setTimeout(function () {
-    const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-    console.log('Jurisdiction:', jurisdiction);
-    if (!allowedJurisdictions.includes(jurisdiction)) {
-      window.Osano.cm.hideDialog();
+// Use a third-party IP geolocation API
+fetch('https://ipinfo.io/json?token=09a57283894e52')
+  .then(response => response.json())
+  .then(data => {
+    const regionCode = `${data.country}-${data.region_code}`.toUpperCase(); // e.g., "US-CA"
+    console.log('Detected region:', regionCode);
+
+    if (allowedJurisdictions.includes(regionCode)) {
+      // Insert Osano script dynamically
+      const osanoScript = document.createElement('script');
+      osanoScript.src = 'https://cmp.osano.com/YOUR-ID/osano.js?variant=two';
+      osanoScript.async = true;
+      document.head.appendChild(osanoScript);
+
+      // Set up Osano pre-load
+      (function (w, o, d) {
+        w[o] =
+          w[o] ||
+          function () {
+            w[o][d].push(arguments);
+          };
+        w[o][d] = w[o][d] || [];
+      })(window, 'Osano', 'data');
+    } else {
+      console.log('Osano not loaded for this region.');
     }
-  }, 250);
-});
+  })
+  .catch(err => {
+    console.warn('Could not determine location. Not loading Osano.', err);
+  });
