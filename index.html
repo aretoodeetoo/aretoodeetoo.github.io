@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 
 <!-- Add CSP -->
-<meta http-equiv="Content-Security-Policy" content="
-    script-src 'self' https://*.osano.com https://my.datasubject.com blob: 'unsafe-inline'; 
-    style-src 'self' 'unsafe-inline' https://*.osano.com https://my.datasubject.com; 
-    frame-src 'self' https://*.osano.com https://my.datasubject.com unifiedconsent.osano.com; 
-    connect-src 'self' https://*.osano.com https://my.datasubject.com; 
-    worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="
+        script-src 'self' https://*.osano.com https://my.datasubject.com blob: 'unsafe-inline'; 
+        style-src 'self' 'unsafe-inline' https://*.osano.com https://my.datasubject.com; 
+        frame-src 'self' https://*.osano.com https://my.datasubject.com unifiedconsent.osano.com; 
+        connect-src 'self' https://*.osano.com https://my.datasubject.com; 
+        worker-src 'self' blob:;">
 
-<!--     Add Osano CMP Script -->
+<!-- Add custom code to display Osano banner only in select locations
+    <script> -->
+        ;(function(w,o,d){w[o]=w[o]||function(){w[o][d].push(arguments)};w[o][d]=w[o][d]||[]})(window,'Osano','data');
+        window.Osano('onInitialized',function(){var e=(window.Osano.cm.jurisdiction||'').split('-')[1],t='ca,co,ct,va,ut,tx,or,mt,ia,nh,de,nj,ne'.split(',').map(function(e){return e.toLowerCase().trim();});-1===t.indexOf(e)&&window.Osano.cm.hideDialog();});
+    </script>
+
+<!-- Add Osano CMP Script -->
     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
 
 <!-- Add Osano CMP Consent Prompt Dialog for VPPA -->
