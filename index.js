@@ -16,6 +16,23 @@ const suppressedJurisdictions = [
 ];
 
 // Immediately hide Osano UI with CSS to prevent flicker
+// Preload Osano API
+(function (w, o, d) {
+  w[o] = w[o] || function () { w[o][d].push(arguments); };
+  w[o][d] = w[o][d] || [];
+})(window, 'Osano', 'data');
+
+// List of U.S. jurisdictions where privacy law is *not* active (suppress banner here)
+const suppressedJurisdictions = [
+  'us-fl', 'us-ga', 'us-al', 'us-az', 'us-ar', 'us-ks',
+  'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
+  'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
+  'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
+  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri'
+  // Adjust as laws change
+];
+
+// Step 1: Block Osano UI before it flashes
 const style = document.createElement('style');
 style.id = 'osano-css-block';
 style.innerHTML = `
@@ -27,23 +44,26 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-// Once Osano is initialized, check jurisdiction and toggle visibility
+// Step 2: On Osano initialization, assess location and show or suppress banner
 window.Osano('onInitialized', function () {
   const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-  console.log('Jurisdiction:', jurisdiction);
+  console.log('Detected jurisdiction:', jurisdiction);
 
-  if (!suppressedJurisdictions.includes(jurisdiction)) {
-    // User is in a banner-eligible location, so remove the CSS that hides it
+  const isSuppressed = suppressedJurisdictions.includes(jurisdiction);
+
+  if (!isSuppressed) {
+    // ✅ Show banner: remove CSS and explicitly trigger
     const hideStyle = document.getElementById('osano-css-block');
-    if (hideStyle) {
-      hideStyle.remove();
-    }
-    console.log('Osano banner shown.');
+    if (hideStyle) hideStyle.remove();
+
+    window.Osano.cm.showDialog(); // <--- Key addition here
+    console.log('Osano banner shown via showDialog().');
   } else {
-    // User is in a suppressed location; keep banner hidden
+    // 🚫 Keep it secret, keep it safe
     console.log('Osano banner suppressed due to jurisdiction.');
   }
 });
+
 
 
 // <!-- Step 2: Load Osano CMP -->
