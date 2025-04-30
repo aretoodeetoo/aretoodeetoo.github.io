@@ -11,7 +11,7 @@ const suppressedJurisdictions = [
   'us-ky', 'us-la', 'us-ms', 'us-mo', 'us-nm', 'us-nc',
   'us-ok', 'us-pa', 'us-sc', 'us-sd', 'us-tn', 'us-wi',
   'us-wv', 'us-wy', 'us-id', 'us-in', 'us-me', 'us-mi',
-  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri'
+  'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'us-tx'
   // Add or remove based on current legislation updates
 ];
 // Step 1: Block Osano UI before it flashes
