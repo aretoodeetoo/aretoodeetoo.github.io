@@ -14,8 +14,16 @@
         connect-src 'self' https://*.osano.com https://my.datasubject.com https://ipinfo.io; 
         worker-src 'self' blob:;">
 
+    <style id="osano-hide-style">
+        #osano-cm-dialog,
+        #osano-cm-drawer,
+        #osano-cm-widget {
+          display: none !important;
+          visibility: hidden !important;
+        }
+    </style>
     
-    <script src="index.js" defer></script>
+    <script src="index.js"></script>
 
 <!-- Add Osano CMP Script -->
     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js"></script>
