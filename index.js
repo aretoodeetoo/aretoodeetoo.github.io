@@ -1,28 +1,75 @@
 // OSANO JS API function to hide banner in unwanted locales
-(function (w, o, d) {
-  w[o] =
-    w[o] ||
-    function () {
-      w[o][d].push(arguments);
-    };
-  w[o][d] = w[o][d] || [];
-})(window, 'Osano', 'data');
+// <!-- Step 1: Preload hook + suppress flag -->
+<script>
+  (function (w, o, d) {
+    w[o] =
+      w[o] ||
+      function () {
+        w[o][d].push(arguments);
+      };
+    w[o][d] = w[o][d] || [];
+  })(window, 'Osano', 'data');
 
-const allowedJurisdictions = [
-  'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
-  'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
-  'us-de', 'us-nj', 'us-ne'
-];
-
-window.Osano('onInitialized', function () {
-  setTimeout(function () {
+  // Suppress auto-display of the dialog initially
+  window.Osano('onInitialized', function () {
     const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-    console.log('Osano jurisdiction detected:', jurisdiction);
-    if (!allowedJurisdictions.includes(jurisdiction)) {
+    const state = jurisdiction.split('-')[1];
+    console.log('Detected jurisdiction:', jurisdiction);
+
+    const allowedStates = [
+      'ca', 'co', 'ct', 'va', 'ut', 'tx', 'or', 'mt',
+      'ia', 'nh', 'de', 'nj', 'ne'
+    ];
+
+    if (!allowedStates.includes(state)) {
+      // Hide dialog if not in an allowed location
       window.Osano.cm.hideDialog();
     }
-  }, 300); // Allow time for jurisdiction to populate
-});
+  });
+
+  // Pre-emptively hide the banner via CSS to avoid flash
+  const style = document.createElement('style');
+  style.innerHTML = `
+    #osano-cm-widget, #osano-cm-dialog, #osano-cm-drawer {
+      display: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Then allow Osano to show UI later via JS if allowed
+</script>
+
+// <!-- Step 2: Load Osano CMP -->
+<script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
+
+
+
+
+// Works but causes the blip as banner initially loads
+// (function (w, o, d) {
+//   w[o] =
+//     w[o] ||
+//     function () {
+//       w[o][d].push(arguments);
+//     };
+//   w[o][d] = w[o][d] || [];
+// })(window, 'Osano', 'data');
+
+// const allowedJurisdictions = [
+//   'us-ca', 'us-co', 'us-ct', 'us-va', 'us-ut',
+//   'us-tx', 'us-or', 'us-mt', 'us-ia', 'us-nh',
+//   'us-de', 'us-nj', 'us-ne'
+// ];
+
+// window.Osano('onInitialized', function () {
+//   setTimeout(function () {
+//     const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
+//     console.log('Osano jurisdiction detected:', jurisdiction);
+//     if (!allowedJurisdictions.includes(jurisdiction)) {
+//       window.Osano.cm.hideDialog();
+//     }
+//   }, 300); // Allow time for jurisdiction to populate
+// });
 
 
 // // Function to call the Osano JavaScript API & allow banner suppression THIRD PARTY API
