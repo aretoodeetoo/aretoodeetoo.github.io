@@ -17,7 +17,7 @@ fetch('https://ipinfo.io/json?token=09a57283894e52')
     if (allowedJurisdictions.includes(regionCode)) {
       // Insert Osano script dynamically
       const osanoScript = document.createElement('script');
-      osanoScript.src = 'https://cmp.osano.com/YOUR-ID/osano.js?variant=two';
+      osanoScript.src = 'https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two';
       osanoScript.async = true;
       document.head.appendChild(osanoScript);
 
