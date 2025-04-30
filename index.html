@@ -15,12 +15,14 @@
         worker-src 'self' blob:;">
 
     <style id="osano-hide-style">
-        #osano-cm-dialog,
-        #osano-cm-drawer,
-        #osano-cm-widget {
-          display: none !important;
-          visibility: hidden !important;
-        }
+      .osano-cm-widget,
+      .osano-cm-dialog,
+      .osano-cm-drawer {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
     </style>
     
     <script src="index.js"></script>
