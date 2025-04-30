@@ -1,4 +1,3 @@
-// OSANO JS API function to hide banner in unwanted locales
 (function (w, o, d) {
   w[o] = w[o] || function () { w[o][d].push(arguments); };
   w[o][d] = w[o][d] || [];
@@ -22,26 +21,13 @@ window.Osano('onInitialized', () => {
 
   if (!suppressBanner) {
     console.log('Eligible location. Forcing banner display.');
-    window.Osano.cm.showDialog();
-  } else {
-    console.log('Suppressed jurisdiction — banner will be hidden.');
-  }
-});
 
-window.Osano('onUiChanged', (component, state) => {
-  if (suppressBanner && state === 'show') {
-    const el = document.getElementById(`osano-cm-${component}`);
-    if (el) {
-      el.style.display = 'none';
-      el.style.visibility = 'hidden';
-      el.style.opacity = '0';
-      el.style.pointerEvents = 'none';
-      console.log(`Suppressed Osano UI component: ${component}`);
+    // ✅ Remove hide-style so UI becomes visible
+    const styleTag = document.getElementById('osano-hide-style');
+    if (styleTag && styleTag.parentNode) {
+      styleTag.parentNode.removeChild(styleTag);
+      console.log('Removed style that hid the Osano banner.');
     }
-  }
-});
-
-
 
 // <!-- Step 2: Load Osano CMP -->
 // <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two"></script>
