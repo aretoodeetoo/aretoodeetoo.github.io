@@ -12,19 +12,32 @@ const suppressedJurisdictions = [
   'us-mn', 'us-nv', 'us-nd', 'us-oh', 'us-ri', 'us-tx',
 ];
 
-window.Osano('onInitialized', function () {
+let suppressBanner = false;
+
+window.Osano('onInitialized', () => {
   const jurisdiction = (window.Osano.cm.jurisdiction || '').toLowerCase();
-  console.log('Jurisdiction:', jurisdiction);
+  console.log('Jurisdiction detected:', jurisdiction);
 
-  const hideStyle = document.getElementById('osano-hide-style');
+  suppressBanner = suppressedJurisdictions.includes(jurisdiction);
 
-  if (suppressedJurisdictions.includes(jurisdiction)) {
-    console.log('Osano banner suppressed for:', jurisdiction);
-    // Leave the hide style in place — no dialog shown
+  if (!suppressBanner) {
+    console.log('Eligible location. Forcing banner display.');
+    window.Osano.cm.showDialog();
   } else {
-    console.log('Showing Osano banner for:', jurisdiction);
-    if (hideStyle) hideStyle.remove();  // Let Osano render normally
-    window.Osano.cm.showDialog();       // Force the banner open
+    console.log('Suppressed jurisdiction — banner will be hidden.');
+  }
+});
+
+window.Osano('onUiChanged', (component, state) => {
+  if (suppressBanner && state === 'show') {
+    const el = document.getElementById(`osano-cm-${component}`);
+    if (el) {
+      el.style.display = 'none';
+      el.style.visibility = 'hidden';
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
+      console.log(`Suppressed Osano UI component: ${component}`);
+    }
   }
 });
 
