@@ -38,14 +38,23 @@ body {
   font-size: var(--font-size-base);
   background-color: #fff;
   color: var(--dark-gray);
-  line-height: 1.6;
+  line-height: 1.75;
   overflow-x: hidden;
+  text-align: center;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--cobalt);
+  color: var(--electric-indigo);
+}
+
+h2, h3 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
 }
 
 a {
@@ -69,8 +78,10 @@ a:hover {
 }
 
 .site-title {
+  font-family: var(--font-heading);
   font-size: 2.75rem;
   margin-bottom: 0.5rem;
+  color: white;
 }
 
 .site-subtitle {
@@ -87,6 +98,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
+  font-family: var(--font-heading);
 }
 
 .nav-list {
@@ -160,11 +172,12 @@ a:hover {
    🧭 Page Layout
    ========================= */
 .module {
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   max-width: 960px;
   margin: 0 auto;
   background-color: white;
   animation: fadeIn 0.6s ease-in;
+  text-align: center;
 }
 
 .hero {
@@ -240,20 +253,24 @@ iframe {
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: var(--cobalt);
+  font-family: var(--font-heading);
 }
 
 .card-description {
   font-size: 1rem;
   color: var(--gray);
   margin-bottom: 1rem;
+  line-height: 1.75;
 }
 
 .card-link {
   display: inline-block;
   background-color: var(--dark-storm);
   color: white;
-  padding: 0.6rem 1.2rem;
+  padding: 0.4rem 1rem;
   border-radius: 50px;
+  font-size: 0.875rem;
+  font-family: var(--font-heading);
   font-weight: 500;
   transition: background-color 0.2s ease;
 }
@@ -271,6 +288,7 @@ iframe {
   padding: 3rem 2rem 1rem;
   font-size: 0.9rem;
   margin-top: 4rem;
+  text-align: center;
 }
 
 .footer-upper {
