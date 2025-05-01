@@ -395,6 +395,32 @@ a:hover {
   font-size: 0.85rem;
 }
 
+/* =========================
+   📄 Embedded DSAR Form
+   ========================= */
+.embedded-form {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 960px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* iFrame Styling */
+iframe {
+    width: 80%;
+    height: 75vh;
+    border: 2px solid #ccc;
+}
+
+
 
 /* Reset default margins and ensure full height */
 /* html, body {
