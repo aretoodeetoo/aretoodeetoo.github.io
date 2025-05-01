@@ -4,48 +4,46 @@
 })(window, 'Osano', 'data');
 
 document.addEventListener("DOMContentLoaded", function () {
-  /**
-   * Jurisdictions where the Osano CMP should stay hidden.
-   * Format: lowercase ISO 3166-1 country code + optional region code (e.g. 'us-ca', 'ca')
-   */
+  // List of jurisdictions where we DO NOT want to show the CMP
   const suppressedJurisdictions = ["us-ca", "us-ct", "ca"];
 
-  /**
-   * Check the user's jurisdiction and display the Osano CMP if required.
-   */
-  function handleCMPDisplay() {
+  // This function compares location and takes action only if not suppressed
+  function evaluateJurisdiction() {
     const jurisdiction = window.Osano?.cm?.jurisdiction;
-
     console.log("Detected jurisdiction:", jurisdiction);
 
-    if (!jurisdiction) {
-      console.warn("Jurisdiction is undefined; CMP will remain hidden.");
-      return;
-    }
+    // If jurisdiction is undefined, fail silently
+    if (!jurisdiction) return;
 
-    // If jurisdiction is not suppressed, display the dialog and widget
+    // If the user's jurisdiction is NOT suppressed, show CMP
     if (!suppressedJurisdictions.includes(jurisdiction)) {
+      console.log("Jurisdiction not suppressed — showing CMP banner.");
+
       const dialog = document.querySelector(".osano-cm-dialog");
       const widget = document.querySelector(".osano-cm-widget");
 
-      if (dialog) dialog.style.display = "block";
-      if (widget) widget.style.display = "block";
+      // Only update display if it's currently hidden
+      if (dialog && getComputedStyle(dialog).display === "none") {
+        dialog.style.display = "block";
+      }
 
-      // Trigger the dialog explicitly for implicit-consent regions
-      if (typeof window.Osano.cm.showDialog === "function") {
+      if (widget && getComputedStyle(widget).display === "none") {
+        widget.style.display = "block";
+      }
+
+      // Trigger the dialog for implicit-consent regions
+      if (typeof window.Osano?.cm?.showDialog === "function") {
         window.Osano.cm.showDialog();
       }
     } else {
-      console.log("Jurisdiction suppressed. CMP remains hidden.");
+      // Do absolutely nothing if jurisdiction is suppressed
+      console.log("Jurisdiction is suppressed — CMP remains hidden.");
     }
   }
 
-  /**
-   * Wait until Osano CMP has fully initialized, then evaluate jurisdiction.
-   */
+  // Wait for Osano to initialize before evaluating
   window.Osano?.("onInitialized", () => {
-    // Slight delay ensures DOM nodes are present
-    setTimeout(handleCMPDisplay, 100);
+    setTimeout(evaluateJurisdiction, 100); // small delay for DOM readiness
   });
 });
 
