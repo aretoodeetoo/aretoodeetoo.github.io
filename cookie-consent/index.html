@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cookie Consent (Recommended Installation)</title>
+  <title>Cookie Consent Module</title>
   <link rel="stylesheet" href="../../styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/00b69937-7a8a-4b2a-8cc9-6eb545e96d81/osano.js"></script>
 </head>
 <body>
-  <!-- Page Header -->
+  <!-- Header -->
   <header class="site-header alt-header">
-    <h1 class="site-title">Cookie Consent (Recommended Installation)</h1>
+    <h1 class="site-title">Cookie Consent Module</h1>
+    <p class="site-subtitle">Explore Osano's cookie banner implementations—from default recommendations to advanced suppression methods.</p>
   </header>
 
-  <!-- Sticky Nav -->
+  <!-- Sticky Navigation -->
   <nav class="nav sticky-nav">
     <ul class="nav-list">
-      <li><a href="/dsar/dsar.html">DSAR</a></li>
+      <li><a href="/dsar/index.html">DSAR</a></li>
       <li><a href="/unified-consent/index.html">Unified Consent</a></li>
       <li class="dropdown">
         <span class="dropdown-label">Cookie Consent ▾</span>
@@ -33,32 +32,35 @@
 
   <!-- Main Content -->
   <main class="module">
-    <!-- Hero Section -->
     <section class="hero">
-      <h2>Welcome to Our Website</h2>
-      <p>This site demonstrates the recommended implementation of Osano’s Cookie Consent banner.</p>
+      <h2>Available Demo Implementations</h2>
+      <p>Each of the following pages showcases a unique way to integrate and configure Osano’s cookie consent banner. Click any option below to view a live implementation.</p>
     </section>
 
-    <!-- Three-Column Features -->
-    <section class="features">
-      <div class="feature">
-        <h3>Automatic Geo-Targeting</h3>
-        <p>The Osano banner only displays in regions where consent is legally required—completely automated.</p>
+    <section class="card-grid">
+      <div class="card">
+        <h3 class="card-title">Default Recommended Installation</h3>
+        <p class="card-description">
+          This demo shows the out-of-the-box Osano cookie banner with default settings. It provides full compliance coverage and is the preferred configuration.
+        </p>
+        <a class="card-link" href="/cookie-consent/default.html">View Default Demo</a>
       </div>
-      <div class="feature">
-        <h3>Built-in Accessibility</h3>
-        <p>Osano is WCAG & GDPR compliant out of the box, supporting tab navigation, screen readers, and more.</p>
-      </div>
-      <div class="feature">
-        <h3>No-Code Integration</h3>
-        <p>Deploy with a single script tag and configure all behavior from the Osano platform.</p>
-      </div>
-    </section>
 
-    <!-- About Section -->
-    <section class="about">
-      <h2>Why This Is the Recommended Installation</h2>
-      <p>The default Osano configuration leverages years of privacy expertise to deliver legally compliant behavior globally. This implementation includes automatic jurisdiction detection, graceful fallback defaults, and fully managed consent logic—ensuring a fast and easy deployment without sacrificing trust or transparency.</p>
+      <div class="card">
+        <h3 class="card-title">Banner Suppressed via JavaScript API</h3>
+        <p class="card-description">
+          This version hides the banner by default using Osano’s JavaScript API, and then selectively reveals it based on jurisdiction. Not recommended for compliance-critical deployments.
+        </p>
+        <a class="card-link" href="/cookie-consent/osano-js-api-banner-suppression.html">View JS Suppression Demo</a>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Banner Suppressed via Third-Party API</h3>
+        <p class="card-description">
+          This installation conditionally loads the cookie banner only in allowed regions by checking user IP data through a third-party API. Use with caution.
+        </p>
+        <a class="card-link" href="/cookie-consent/third-party-banner-suppression.html">View 3rd Party Suppression Demo</a>
+      </div>
     </section>
   </main>
 
@@ -68,7 +70,7 @@
       <div class="footer-column">
         <h4>Company</h4>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="#">About Us</a></li>
           <li><a href="#">Careers</a></li>
         </ul>
@@ -86,19 +88,17 @@
         <ul>
           <li><a href="https://docs.osano.com" target="_blank" rel="noopener">Implementation Docs</a></li>
           <li><a href="https://developers.osano.com" target="_blank" rel="noopener">Developer Docs</a></li>
-          <li><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a></li>
+          <li><a href="https://my.datasubject.com/AzZcpvRm9bbsqngN/50113" target="_blank">DSAR Form</a></li>
         </ul>
       </div>
     </div>
-
     <div class="footer-lower">
       <p>Made by Christie</p>
       <p>© <span id="year"></span> Osano</p>
     </div>
   </footer>
 
-  <script src="../../scripts/main.js"></script>
-  <script src="../../scripts/cookie-consent/default.js"></script>
+  <script src="../../scripts/cookie-consent/index.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
