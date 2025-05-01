@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cookie Consent (Third-Party API Suppression)</title>
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <!-- Page Header -->
+  <header class="site-header alt-header">
+    <h1 class="site-title">Cookie Consent (Custom Implementation)</h1>
+    <p class="site-subtitle">This page demonstrates conditional script loading using a third-party IP geolocation service.</p>
+  </header>
 
+  <!-- Sticky Navigation -->
+  <nav class="nav sticky-nav">
+    <ul class="nav-list">
+      <li><a href="/dsar/index.html">DSAR</a></li>
+      <li><a href="/unified-consent/index.html">Unified Consent</a></li>
+      <li class="dropdown">
+        <span class="dropdown-label">Cookie Consent ▾</span>
+        <ul class="dropdown-menu">
+          <li><a href="/cookie-consent/index.html">Module Overview</a></li>
+          <li><a href="/cookie-consent/default.html">Default</a></li>
+          <li><a href="/cookie-consent/osano-js-api-banner-suppression.html">Suppressed via JS API</a></li>
+          <li><a href="/cookie-consent/third-party-banner-suppression.html">Suppressed via Third-Party API</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="module">
+    <section class="hero">
+      <h2>What This Implementation Does</h2>
+      <p>This implementation uses a third-party IP lookup tool (demoed here with <strong>IP Info</strong>) to determine whether the Osano cookie script should load at all. If the user is not in a supported location, <strong>the Osano script is never added to the page</strong>.</p>
+    </section>
+
+    <section class="about">
+      <h2>Implementation Details & Caveats</h2>
+      <p>This setup allows full suppression of Osano’s script based on the user's detected region — which means no banner will be loaded, displayed, or function at all unless the user is in an approved region.</p>
+
+      <p><strong>Important notes:</strong></p>
+      <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+        <li>Osano <strong>does not recommend</strong> this method and cannot guarantee compliance when using a third-party tool.</li>
+        <li>You are responsible for selecting, validating, and maintaining your own IP lookup service.</li>
+        <li>This page uses <a href="https://ipinfo.io" target="_blank" rel="noopener">IP Info</a> for demonstration purposes only.</li>
+      </ul>
+    </section>
+
+    <!-- Debug Display -->
+    <section class="location-debug">
+      <h2>Banner Visibility Debug Info</h2>
+      <p><strong>Region:</strong> <span id="region">Detecting...</span></p>
+      <p><strong>Banner Visibility:</strong> <span id="banner-status">Checking...</span></p>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer corporate-footer">
+    <div class="footer-upper">
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="https://docs.osano.com" target="_blank" rel="noopener">Implementation Docs</a></li>
+          <li><a href="https://developers.osano.com" target="_blank" rel="noopener">Developer Docs</a></li>
+          <li><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-lower">
+      <p>Made by Christie</p>
+      <p>© <span id="year"></span> Osano</p>
+    </div>
+  </footer>
+
+  <!-- Page-Specific Script -->
+  <script src="https://aretoodeetoo.github.io/scripts/cookie-consent/third-party-api-suppression.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
