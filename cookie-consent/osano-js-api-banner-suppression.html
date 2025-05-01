@@ -48,6 +48,12 @@
       <p>This implementation demonstrates how to conditionally display the Osano cookie banner based on user location using the <a href="https://developers.osano.com/cmp/javascript-api/" target="_blank" rel="noopener">Osano JavaScript API</a>.</p>
     </section>
 
+    <section class="location-debug">
+      <h2>Banner Visibility Debug Info</h2>
+      <p><strong>Jurisdiction:</strong> <span id="jurisdiction">Detecting...</span></p>
+      <p><strong>Banner Visibility:</strong> <span id="banner-status">Checking...</span></p>
+    </section>
+
     <section class="about">
       <h2>Implementation Details & Caveats</h2>
       <p>This example hides the Osano banner for all users by default using CSS. Once the user's location is determined, a script checks whether the banner should be displayed. If the user is in a jurisdiction where privacy legislation is active, the script modifies the page’s CSS to reveal the banner and programmatically calls `Osano.cm.showDialog()`.</p>
