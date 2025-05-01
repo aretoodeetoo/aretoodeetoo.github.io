@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cookie Consent (Custom Implementation)</title>
+  <link rel="stylesheet" href="../../styles.css" />
 
+/* Hide Osano CMP dialogs and widget until JavaScript determines visibility */
+  <style id="osano-hide-style">
+    .osano-cm-dialog,
+    .osano-cm-widget {
+          display: none;
+        }    
+  </style>
+
+  <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js"></script>
+</head>
+    
+<body>
+  <!-- Page Header with Subtitle -->
+  <header class="site-header alt-header">
+    <h1 class="site-title">Cookie Consent (Custom Implementation)</h1>
+    <p class="site-subtitle">This page includes an example of the Osano cookie consent manager conditionally loading based on the user's location.</p>
+  </header>
+
+  <!-- Sticky Navigation -->
+  <nav class="nav sticky-nav">
+    <ul class="nav-list">
+      <li><a href="/dsar/index.html">DSAR</a></li>
+      <li><a href="/unified-consent/index.html">Unified Consent</a></li>
+      <li class="dropdown">
+        <span class="dropdown-label">Cookie Consent ▾</span>
+        <ul class="dropdown-menu">
+          <li><a href="/cookie-consent/index.html">Module Overview</a></li>
+          <li><a href="/cookie-consent/default.html">Default</a></li>
+          <li><a href="/cookie-consent/osano-js-api-suppression.html">Suppressed via JS API</a></li>
+          <li><a href="/cookie-consent/third-party-api-suppression.html">Suppressed via Third-Party API</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Content Section -->
+  <main class="module">
+    <section class="hero">
+      <h2>What This Implementation Does</h2>
+      <p>This implementation demonstrates how to conditionally display the Osano cookie banner based on user location using the <a href="https://developers.osano.com/cmp/javascript-api/" target="_blank" rel="noopener">Osano JavaScript API</a>.</p>
+    </section>
+
+    <section class="about">
+      <h2>Implementation Details & Caveats</h2>
+      <p>This example hides the Osano banner for all users by default using CSS. Once the user's location is determined, a script checks whether the banner should be displayed. If the user is in a jurisdiction where privacy legislation is active, the script modifies the page’s CSS to reveal the banner and programmatically calls `Osano.cm.showDialog()`.</p>
+
+      <p>This implementation is intended for advanced users who want to suppress the banner in U.S. states that currently lack applicable privacy legislation. It is **not recommended by Osano**, and using it may compromise your compliance posture.</p>
+
+      <p>⚠️ <strong>Important Requirements:</strong></p>
+      <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+        <li>You must enable the <a href="https://docs.osano.com/hc/en-us/articles/22469433588756-US-State-Level-Legislation-Opt-Out-Banner-Format-Setting" target="_blank" rel="noopener">US State Level Legislation Opt Out Banner Format</a> setting in your Osano configuration.</li>
+        <li>This implementation does <strong>not</strong> prevent cookies from loading. It only hides the **visual** appearance of the banner.</li>
+        <li>If you need to conditionally prevent the banner (and script) from loading at all, please visit our <a href="/cookie-consent/third-party-api-suppression.html">Third-Party API Suppression</a> page.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Shared Cookie Consent Footer -->
+  <footer class="footer corporate-footer">
+    <div class="footer-upper">
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="https://docs.osano.com" target="_blank" rel="noopener">Implementation Docs</a></li>
+          <li><a href="https://developers.osano.com" target="_blank" rel="noopener">Developer Docs</a></li>
+          <li><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-lower">
+      <p>Made by Christie</p>
+      <p>© <span id="year"></span> Osano</p>
+    </div>
+  </footer>
+
+  <script src="https://aretoodeetoo.github.io/scripts/cookie-consent/osano-js-api-suppression.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
