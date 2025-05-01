@@ -2,7 +2,6 @@
    🎨 Brand Color Variables
    ========================= */
 :root {
-  /* Primary Colors */
   --electric-indigo: #2b18c2;
   --cobalt: #29246a;
   --periwinkle: #7764fa;
@@ -12,7 +11,6 @@
   --dark-storm: #7a3ff1;
   --paper: #f4f4f4;
 
-  /* Secondary Colors */
   --yellow: #eeb155;
   --peach: #f09f92;
   --light-blue: #3da9f0;
@@ -21,36 +19,47 @@
   --dark-gray: #0e0416;
   --dark-gray-blue: #180d43;
 
-  --font-body: 'Segoe UI', sans-serif;
+  --font-heading: 'Jost', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-size-base: 16px;
 }
 
 /* =========================
-   🔧 Base Styles
+   🔧 Global Layout Reset
    ========================= */
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: var(--font-body);
-  background-color: var(--paper);
-  color: var(--dark-gray);
-  line-height: 1.6;
 }
 
-h1, h2 {
-  color: var(--electric-indigo);
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  background-color: #fff;
+  color: var(--dark-gray);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+   font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--cobalt);
 }
 
 a {
-  color: var(--cobalt);
+  color: var(--light-blue);
   text-decoration: none;
 }
 
 a:hover {
   color: var(--emerald);
+  text-decoration: underline;
 }
 
 /* =========================
-   🧱 Header
+   📌 Header + Nav
    ========================= */
 .site-header {
   background-color: var(--cobalt);
@@ -59,14 +68,16 @@ a:hover {
 }
 
 .site-title {
-  margin: 0;
-  font-size: 2.5rem;
   color: white;
+  font-size: 2.25rem;
 }
 
-/* =========================
-   📌 Sticky Navigation
-   ========================= */
+.site-subtitle {
+  color: var(--thistle);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
 .nav {
   background-color: var(--cobalt);
   color: white;
@@ -97,11 +108,11 @@ a:hover {
 }
 
 /* =========================
-   🔽 Dropdown Menu
+   🔽 Dropdown Navigation
    ========================= */
 .dropdown {
   position: relative;
-  display: inline-block; /* ensures dropdown wraps both label & menu tightly */
+  display: inline-block;
 }
 
 .dropdown-label {
@@ -113,11 +124,10 @@ a:hover {
   display: inline-block;
 }
 
-/* Make sure the menu is directly beneath the label */
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%; /* positions directly below label */
+  top: 100%;
   left: 0;
   background-color: var(--cobalt);
   padding: 1rem;
@@ -152,206 +162,103 @@ a:hover {
 }
 
 /* =========================
-   🧭 Dashboard Section
+   🧭 Page Content Layout
    ========================= */
-.dashboard {
+.module {
   padding: 3rem 2rem;
   max-width: 960px;
   margin: 0 auto;
+  background-color: white;
+}
+
+.hero {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.intro-text {
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
-  color: var(--gray);
+.section {
+  padding: 3rem 0;
 }
 
+.section.light {
+  background-color: var(--paper);
+}
+
+.section.dark {
+  background-color: var(--cobalt);
+  color: white;
+}
+
+/* =========================
+   📄 Embedded Forms & Iframes
+   ========================= */
+.embedded-form {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 960px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+  width: 100%;
+  border: none;
+}
+
+/* =========================
+   💳 Cards
+   ========================= */
 .card-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  padding: 2rem 0;
 }
 
 .card {
   background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
   padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   width: 280px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-title {
-  font-size: 1.5rem;
-  color: var(--electric-indigo);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--cobalt);
 }
 
 .card-description {
   font-size: 1rem;
   color: var(--gray);
-  margin: 1rem 0;
-}
-
-.card-link {
-  display: inline-block;
-  background-color: var(--electric-indigo);
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  margin-top: 1rem;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-
-.card-link:hover {
-  background-color: var(--dark-storm);
 }
 
 /* =========================
-   ⚓ Footer (index.html only)
+   🧾 Footer
    ========================= */
 .footer {
-  margin-top: 4rem;
-  padding: 2rem;
-  background-color: var(--thistle);
-  color: var(--gray-blue);
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 0;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
-.footer-links a {
-  color: var(--gray-blue);
-  text-decoration: underline;
-}
-
-.footer-links a:hover {
-  color: var(--dark-gray-blue);
-}
-
-/* =========================
-   🧱 Alt Header for Modules
-   ========================= */
-.alt-header {
-  background-color: var(--violet);
-  padding: 2rem;
-  text-align: center;
-}
-
-.alt-header .site-title {
-  margin: 0;
-  font-size: 2.25rem;
-  color: white;
-}
-
-/* =========================
-   🦸 Hero Section
-   ========================= */
-.hero {
-  background-color: var(--thistle);
-  padding: 3rem 2rem;
-  text-align: center;
-}
-
-.hero h2 {
-  margin-bottom: 1rem;
-  color: var(--cobalt);
-}
-
-.hero p {
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-  color: var(--gray);
-}
-
-/* =========================
-   🧱 Three-Column Features
-   ========================= */
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  padding: 3rem 2rem;
-  background-color: white;
-}
-
-.feature {
-  flex: 1 1 280px;
-  max-width: 300px;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-  background-color: var(--paper);
-  text-align: center;
-}
-
-.feature h3 {
-  color: var(--electric-indigo);
-  margin-bottom: 0.75rem;
-}
-
-.feature p {
-  color: var(--gray);
-  font-size: 0.95rem;
-}
-
-/* =========================
-   ℹ️ About Section
-   ========================= */
-.about {
-  background-color: var(--light-blue);
-  color: white;
-  padding: 3rem 2rem;
-  text-align: center;
-}
-
-.about h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.about p {
-  max-width: 800px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-}
-
-.location-debug {
-  background-color: var(--paper);
-  color: var(--dark-gray);
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 700px;
-  text-align: left;
-  border-left: 4px solid var(--light-blue);
-  border-radius: 6px;
-}
-
-/* =========================
-   🧾 Corporate Footer
-   ========================= */
-.corporate-footer {
   background-color: var(--cobalt);
   color: white;
   padding: 3rem 2rem 1rem;
   font-size: 0.9rem;
+  margin-top: 4rem;
 }
 
 .footer-upper {
@@ -394,169 +301,3 @@ a:hover {
   padding-top: 1rem;
   font-size: 0.85rem;
 }
-
-/* =========================
-   📄 Embedded DSAR Form
-   ========================= */
-.embedded-form {
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.form-container {
-  width: 100%;
-  max-width: 960px;
-  background-color: white;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* iFrame Styling */
-iframe {
-    width: 80%;
-    height: 75vh;
-    border: 2px solid #ccc;
-}
-
-
-
-/* Reset default margins and ensure full height */
-/* html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-} */
-
-/* Navigation Bar */
-/* nav {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 10px 15px;
-    transition: background 0.3s ease-in-out;
-}
-
-nav ul li a:hover {
-    background-color: #555;
-    border-radius: 5px;
-} */
-
-/* Main content container */
-/* main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 60px; /* Adjusted for fixed nav */
-/*     padding-bottom: 20px;
-    text-align: center;
-} */
-
-/* iFrame Styling */
-/* iframe {
-    width: 80%;
-    height: 75vh;
-    border: 2px solid #ccc;
-} */
-
-/* Footer */
-/* footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-} */
-
-/* Footer Links */
-/* footer a {
-    color: #f9f9f9;
-    text-decoration: none;
-    padding: 0 10px;
-}
-
-footer a:hover {
-    text-decoration: underline;
-} */
-
-/* body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #333;
-    padding: 10px;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 10px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-main {
-    padding: 20px;
-}
-
-iframe {
-    width: 100%;
-    height: 90vh;
-    border: 2px solid #ccc;
-}
-
-footer {
-    color: white;
-    padding: 10px;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-}
-
- */
