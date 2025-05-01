@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
    * Jurisdictions where the Osano CMP should stay hidden.
    * Format: lowercase ISO 3166-1 country code + optional region code (e.g. 'us-ca', 'ca')
    */
-  const suppressedJurisdictions = ["us-tx", "us-ct", "ca"];
+  const suppressedJurisdictions = ["us-ca", "us-ct", "ca"];
 
   /**
    * Check the user's jurisdiction and display the Osano CMP if required.
