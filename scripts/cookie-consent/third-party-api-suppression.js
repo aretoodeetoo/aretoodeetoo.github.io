@@ -1,3 +1,4 @@
+// // Function to call the Osano JavaScript API & allow banner suppression
 fetch('https://ipinfo.io/json?token=09a57283894e52')
   .then(response => response.json())
   .then(data => {
