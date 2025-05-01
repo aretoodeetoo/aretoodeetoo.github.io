@@ -96,7 +96,9 @@ a:hover {
   color: var(--emerald);
 }
 
-/* Dropdown Menu */
+/* =========================
+   🔽 Dropdown Menu
+   ========================= */
 .dropdown {
   position: relative;
 }
@@ -104,10 +106,12 @@ a:hover {
 .dropdown-label {
   cursor: pointer;
   user-select: none;
+  font-weight: bold;
+  color: white;
+  padding: 0.5rem;
 }
 
 .dropdown-menu {
-  display: none;
   position: absolute;
   top: 2.5rem;
   left: 0;
@@ -117,8 +121,14 @@ a:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   list-style: none;
   z-index: 1001;
+
+  /* Smooth fade-in/out */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
+/* Show dropdown on hover or keyboard focus */
 .dropdown:hover,
 .dropdown:focus-within {
   position: relative;
@@ -126,15 +136,29 @@ a:hover {
 
 .dropdown:hover .dropdown-menu,
 .dropdown:focus-within .dropdown-menu {
-  display: block;
+  display: block;        /* fallback for older browsers */
+  opacity: 1;
+  pointer-events: auto;
 }
 
+/* Dropdown link spacing */
 .dropdown-menu li {
   margin-bottom: 0.5rem;
 }
 
 .dropdown-menu li:last-child {
   margin-bottom: 0;
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.dropdown-menu a:hover {
+  color: var(--emerald);
+  text-decoration: underline;
 }
 
 /* =========================
