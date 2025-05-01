@@ -1,5 +1,5 @@
 // // Function to call the Osano JavaScript API & allow banner suppression
-fetch('https://ipinfo.io/json?token=09a57283894e52')
+  fetch('https://ipinfo.io/json?token=09a57283894e52')
   .then(response => response.json())
   .then(data => {
     const stateName = data.region || '';
@@ -22,7 +22,7 @@ fetch('https://ipinfo.io/json?token=09a57283894e52')
 
       // Load Osano
       const osanoScript = document.createElement('script');
-      osanoScript.src = 'https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js?variant=two';
+      osanoScript.src = 'https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js';
       osanoScript.async = true;
       document.head.appendChild(osanoScript);
     } else {
