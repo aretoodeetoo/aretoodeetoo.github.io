@@ -111,7 +111,11 @@ a:hover {
   padding: 0.5rem;
 }
 
+/* Initial hidden state */
 .dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   position: absolute;
   top: 2.5rem;
   left: 0;
@@ -121,27 +125,18 @@ a:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   list-style: none;
   z-index: 1001;
-
-  /* Smooth fade-in/out */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-/* Show dropdown on hover or keyboard focus */
-.dropdown:hover,
-.dropdown:focus-within {
-  position: relative;
-}
-
+/* Keep it open on hover or focus WITHIN the dropdown */
 .dropdown:hover .dropdown-menu,
 .dropdown:focus-within .dropdown-menu {
-  display: block;        /* fallback for older browsers */
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
-/* Dropdown link spacing */
+/* Items inside dropdown */
 .dropdown-menu li {
   margin-bottom: 0.5rem;
 }
@@ -153,14 +148,12 @@ a:hover {
 .dropdown-menu a {
   color: white;
   text-decoration: none;
-  font-weight: normal;
 }
 
 .dropdown-menu a:hover {
   color: var(--emerald);
   text-decoration: underline;
 }
-
 /* =========================
    🧭 Dashboard Section
    ========================= */
