@@ -53,7 +53,7 @@ a:hover {
    🧱 Header
    ========================= */
 .site-header {
-  background-color: var(--periwinkle);
+  background-color: var(--cobalt);
   padding: 2rem;
   text-align: center;
 }
