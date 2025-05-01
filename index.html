@@ -1,13 +1,96 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="
+        script-src 'self' https://*.osano.com https://my.datasubject.com https://ipinfo.io blob: 'unsafe-inline'; 
+        style-src 'self' 'unsafe-inline' https://*.osano.com https://my.datasubject.com https://ipinfo.io; 
+        frame-src 'self' https://*.osano.com https://my.datasubject.com unifiedconsent.osano.com https://ipinfo.io; 
+        connect-src 'self' https://*.osano.com https://my.datasubject.com https://ipinfo.io; 
+        worker-src 'self' blob:;">
+  <title>Osano Demo Playground</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+    
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <h1 class="site-title">Osano Demo Playground</h1>
+  </header>
+
+  <!-- Sticky Navigation -->
+  <nav class="nav sticky-nav">
+    <ul class="nav-list">
+      <li><a href="/dsar/index.html">DSAR</a></li>
+      <li><a href="/unified-consent/index.html">Unified Consent</a></li>
+      <li class="dropdown">
+        <span class="dropdown-label">Cookie Consent ▾</span>
+        <ul class="dropdown-menu">
+          <li><a href="/cookie-consent/index.html">Module Overview</a></li>
+          <li><a href="/cookie-consent/default.html">Default</a></li>
+          <li><a href="/cookie-consent/osano-js-api-suppression.html">Banner Suppressed via JS API</a></li>
+          <li><a href="/cookie-consent/third-party-api-suppression.html">Banner Suppressed via Third-Party API</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Intro & Cards -->
+  <main class="dashboard">
+    <section class="intro-text">
+      <p>Welcome to the Osano Demo Playground. This site is designed to help you explore and test different Osano modules in a sandbox environment. Use the menu above or select a module below to get started with a guided demo experience.</p>
+    </section>
+
+    <section class="card-grid">
+      <div class="card">
+        <h2 class="card-title">DSAR</h2>
+        <p class="card-description">Submit and manage Data Subject Access Requests using Osano’s DSAR tooling.</p>
+        <a class="card-link" href="/dsar/index.html">Go to DSAR Demo</a>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Unified Consent</h2>
+        <p class="card-description">Explore how Unified Consent works across different jurisdictions.</p>
+        <a class="card-link" href="/unified-consent/index.html">Go to Unified Consent Demo</a>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Cookie Consent</h2>
+        <p class="card-description">Test multiple implementations of Osano’s cookie banner, including custom suppressions.</p>
+        <a class="card-link" href="/cookie-consent/index.html">Go to Cookie Consent Demo</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Page-Specific Footer -->
+  <footer class="footer">
+    <p class="footer-credit">Made by Christie</p>
+    <p class="footer-copyright">© <span id="year"></span> Osano</p>
+    <ul class="footer-links">
+      <li><a href="https://www.osano.com" target="_blank" rel="noopener">Osano Home</a></li>
+      <li><a href="https://docs.osano.com" target="_blank" rel="noopener">Implementation Docs</a></li>
+      <li><a href="https://developers.osano.com" target="_blank" rel="noopener">Developer Docs</a></li>
+    </ul>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script>
+    // Dynamic copyright
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+
+<!-- <html lang="en">
+<head>
 <!-- Link to CSS stylesheet -->
-    <meta charset="UTF-8">
+<!--     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Osano Product Demo</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> -->
 
-<!-- Add CSP -->
-    <meta http-equiv="Content-Security-Policy" content="
+<!-- <!-- Add CSP -->
+<!--     <meta http-equiv="Content-Security-Policy" content="
         script-src 'self' https://*.osano.com https://my.datasubject.com https://ipinfo.io blob: 'unsafe-inline'; 
         style-src 'self' 'unsafe-inline' https://*.osano.com https://my.datasubject.com https://ipinfo.io; 
         frame-src 'self' https://*.osano.com https://my.datasubject.com unifiedconsent.osano.com https://ipinfo.io; 
@@ -22,20 +105,20 @@
             }    
     </style>
     
-    <script src="index.js"></script>
+    <script src="index.js"></script> --> 
 
 <!-- Add Osano CMP Script -->
-    <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js"></script>
-
+<!--     <script src="https://cmp.osano.com/AzZcpvRm9bbsqngN/5cd0582e-bdad-4a5c-8484-356e17bbbe1e/osano.js"></script>
+ -->
 <!-- Add Osano CMP Consent Prompt Dialog for VPPA -->
-    <script
+<!--     <script
      data-config-id="4d45f995-b92c-4181-81f5-1de17d8b8499"
      data-customer-id="AzZcpvRm9bbsqngN"
      src="https://clientapps.osano.com/uc-opt/index.js"
     ></script>
-    
+     -->
 <!-- Add Osano Unified Consent -->
-    <meta http-equiv="Content-Security-Policy" content="frame-src 'self' unifiedconsent.osano.com"> 
+<!--     <meta http-equiv="Content-Security-Policy" content="frame-src 'self' unifiedconsent.osano.com"> 
     
     <script type="text/javascript" src="https://s.uc.osano.com/sdk/latest.min.js" crossorigin="anonymous"></script> 
     <script type="text/javascript" crossorigin="anonymous"> 
@@ -77,3 +160,4 @@
     </footer>
 </body>
 </html>
+ -->
