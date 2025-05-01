@@ -119,7 +119,13 @@ a:hover {
   z-index: 1001;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover,
+.dropdown:focus-within {
+  position: relative;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
   display: block;
 }
 
