@@ -1,15 +1,242 @@
+/* =========================
+   🎨 Brand Color Variables
+   ========================= */
+:root {
+  /* Primary Colors */
+  --electric-indigo: #2b18c2;
+  --cobalt: #29246a;
+  --periwinkle: #7764fa;
+  --emerald: #37cd8f;
+  --thistle: #d2cfff;
+  --violet: #c4aefa;
+  --dark-storm: #7a3ff1;
+  --paper: #f4f4f4;
+
+  /* Secondary Colors */
+  --yellow: #eeb155;
+  --peach: #f09f92;
+  --light-blue: #3da9f0;
+  --gray-blue: #393577;
+  --gray: #5f5867;
+  --dark-gray: #0e0416;
+  --dark-gray-blue: #180d43;
+
+  --font-body: 'Segoe UI', sans-serif;
+}
+
+/* =========================
+   🔧 Base Styles
+   ========================= */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
+
+h1, h2 {
+  color: var(--electric-indigo);
+}
+
+a {
+  color: var(--light-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--emerald);
+}
+
+/* =========================
+   🧱 Header
+   ========================= */
+.site-header {
+  background-color: var(--periwinkle);
+  padding: 2rem;
+  text-align: center;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 2.5rem;
+  color: white;
+}
+
+/* =========================
+   📌 Sticky Navigation
+   ========================= */
+.nav {
+  background-color: var(--cobalt);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-list a {
+  color: white;
+  font-weight: bold;
+}
+
+.nav-list a:hover {
+  color: var(--emerald);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  background-color: var(--cobalt);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  z-index: 1001;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-menu li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================
+   🧭 Dashboard Section
+   ========================= */
+.dashboard {
+  padding: 3rem 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.intro-text {
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 280px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: var(--electric-indigo);
+}
+
+.card-description {
+  font-size: 1rem;
+  color: var(--gray);
+  margin: 1rem 0;
+}
+
+.card-link {
+  display: inline-block;
+  background-color: var(--electric-indigo);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.card-link:hover {
+  background-color: var(--dark-storm);
+}
+
+/* =========================
+   ⚓ Footer (index.html only)
+   ========================= */
+.footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: var(--thistle);
+  color: var(--gray-blue);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: var(--gray-blue);
+  text-decoration: underline;
+}
+
+.footer-links a:hover {
+  color: var(--dark-gray-blue);
+}
+
+
 /* Reset default margins and ensure full height */
-html, body {
+/* html, body {
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-}
+} */
 
 /* Navigation Bar */
-nav {
+/* nav {
     background-color: #333;
     color: white;
     padding: 10px 0;
@@ -45,29 +272,29 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #555;
     border-radius: 5px;
-}
+} */
 
 /* Main content container */
-main {
+/* main {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 60px; /* Adjusted for fixed nav */
-    padding-bottom: 20px; /* Prevents overlap with footer */
+/*     padding-bottom: 20px;
     text-align: center;
-}
+} */
 
 /* iFrame Styling */
-iframe {
+/* iframe {
     width: 80%;
-    height: 75vh; /* Adjusted for layout */
+    height: 75vh;
     border: 2px solid #ccc;
-}
+} */
 
 /* Footer */
-footer {
+/* footer {
     background-color: #333;
     color: white;
     text-align: center;
@@ -75,10 +302,10 @@ footer {
     width: 100%;
     bottom: 0;
     left: 0;
-}
+} */
 
 /* Footer Links */
-footer a {
+/* footer a {
     color: #f9f9f9;
     text-decoration: none;
     padding: 0 10px;
@@ -86,7 +313,7 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
-}
+} */
 
 /* body {
     font-family: Arial, sans-serif;
@@ -134,4 +361,5 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
  */
