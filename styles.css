@@ -386,3 +386,33 @@ iframe {
 .close-button:hover {
   color: #000;
 }
+
+/* Add styling for the dynamic Location & Banner Status section on CMP pages */
+
+.location-debug {
+  background-color: var(--paper);
+  border: 2px solid var(--emerald);
+  border-left: 6px solid var(--emerald);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  color: var(--dark-gray);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.4s ease-in;
+}
+
+.location-debug h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--cobalt);
+}
+
+.location-debug p {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.location-debug strong {
+  color: var(--gray-blue);
+}
