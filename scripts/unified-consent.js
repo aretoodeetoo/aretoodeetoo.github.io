@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Only run this logic if the page is /terms-and-conditions.html
   if (!window.location.pathname.includes("terms-and-conditions.html")) return;
 
   const agreeButton = document.getElementById("agree-btn");
@@ -7,30 +6,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusBox = document.getElementById("consent-status");
 
   agreeButton.addEventListener("click", async () => {
+    // Safety check: ensure SDK is loaded
+    const sdk = window.unifiedConsentJsSdk?.UnifiedConsentByOsanoSDK;
+    if (!sdk) {
+      console.error("Osano Unified Consent SDK not loaded.");
+      return;
+    }
+
     try {
-      const token = await window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.getToken({
+      // Step 1: Get token
+      const token = await sdk.getToken({
         issuer: "https://uc.api.osano.com/v2/token/create",
         configId: "8834de69-269c-45ae-a275-0e0b54cfd817",
         customerId: "AzZcpvRm9bbsqngN"
       });
 
-      const client = window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.createClient({
+      // Step 2: Create client
+      const client = sdk.createClient({
         token,
         apiUrl: "https://uc.api.osano.com/v2"
       });
 
+      // Step 3: Send consent
       await client.createConsent({
         tags: ["terms-of-use"],
         actions: [
           {
             target: "terms-of-use-policy",
             vendor: "internal",
-            action: window.unifiedConsentJsSdk.ActionType.Accept
+            action: sdk.ActionType.Accept
           }
         ],
-        subject: window.unifiedConsentJsSdk.Subject.anonymous()
+        subject: sdk.Subject.anonymous()
       });
 
+      // ✅ Update UI on success
       banner.style.display = "none";
       statusBox.style.display = "block";
       statusBox.textContent = "✅ Record of consent saved!";
@@ -40,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
       statusBox.style.padding = "1rem";
       statusBox.style.borderRadius = "8px";
     } catch (error) {
+      // ❌ Update UI on failure
       banner.style.display = "none";
       statusBox.style.display = "block";
       statusBox.textContent = "❌ Consent was not saved... let the troubleshooting commence.";
@@ -52,4 +63,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
