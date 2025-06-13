@@ -1,3 +1,7 @@
+const agreeButton = document.getElementById("agree-btn");
+const banner = document.getElementById("consent-banner");
+const statusBox = document.getElementById("consent-status");
+
 agreeButton.addEventListener("click", async () => {
   const sdk = window.unifiedConsentJsSdk?.UnifiedConsentByOsanoSDK;
   if (!sdk) {
