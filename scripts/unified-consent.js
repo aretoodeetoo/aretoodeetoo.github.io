@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const client = window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.createClient({
         token,
-        apiUrl: "https://uc.api.osano.com"
+        apiUrl: "https://uc.api.osano.com/v2"
       });
 
       await client.createConsent({
