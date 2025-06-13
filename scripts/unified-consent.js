@@ -34,13 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
         tags: ["terms-of-use"],
         actions: [
           {
-            target: "terms-of-use",
-            vendor: "internal",
+            target: "navigation-system",
+            vendor: "general-vendor",
             action: window.unifiedConsentJsSdk.ActionType.Accept
           }
         ],
         subject: window.unifiedConsentJsSdk.Subject.anonymous()
       };
+
 
       console.log("Submitting consent:", payload);
       await client.createConsent(payload);
