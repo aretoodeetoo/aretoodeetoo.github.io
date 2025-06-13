@@ -416,3 +416,58 @@ iframe {
 .location-debug strong {
   color: var(--gray-blue);
 }
+
+/* =========================
+   ✅ Unified Consent: Terms Banner
+   ========================= */
+.consent-banner-wrapper {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.consent-banner {
+  background-color: var(--paper);
+  border: 2px solid var(--cobalt);
+  border-left: 6px solid var(--electric-indigo);
+  padding: 1.5rem 2rem;
+  max-width: 700px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.4s ease-in;
+}
+
+.consent-banner p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
+
+#agree-btn {
+  background-color: var(--dark-storm);
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#agree-btn:hover {
+  background-color: var(--electric-indigo);
+  transform: scale(1.05);
+}
+
+.consent-status {
+  max-width: 700px;
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
