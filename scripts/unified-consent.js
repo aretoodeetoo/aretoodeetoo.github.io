@@ -28,17 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Step 3: Send consent
-      await client.createConsent({
-        tags: ["terms-of-use"],
-        actions: [
-          {
-            target: "terms-of-use-policy",
-            vendor: "internal",
-            action: window.unifiedConsentJsSdk.ActionType.Accept
-          }
-        ],
-        subject: sdk.Subject.anonymous()
-      });
+    await client.createConsent({
+      tags: ["terms-of-use"],
+      actions: [
+        {
+          target: "terms-of-use-policy",
+          vendor: "internal",
+          action: window.unifiedConsentJsSdk.ActionType.Accept
+        }
+      ],
+      subject: window.unifiedConsentJsSdk.Subject.anonymous()
+    });
 
       // ✅ Update UI on success
       banner.style.display = "none";
