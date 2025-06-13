@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
           {
             target: "terms-of-use-policy",
             vendor: "internal",
-            action: sdk.ActionType.Accept
+            action: window.unifiedConsentJsSdk.ActionType.Accept
           }
         ],
         subject: sdk.Subject.anonymous()
