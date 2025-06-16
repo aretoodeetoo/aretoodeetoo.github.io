@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // 1) Get access token
+      // 1) Get an access token :contentReference[oaicite:1]{index=1}
       const accessToken = await UnifiedConsentByOsanoSDK.getToken({
         issuer:     "https://uc.api.osano.com/v2/token/create",
         configId:   "8834de69-269c-45ae-a275-0e0b54cfd817",
@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       console.log("[Consent] ✅ Access token:", accessToken);
 
-      // 2) Instantiate the client
+      // 2) Instantiate the client against the v2 API :contentReference[oaicite:2]{index=2}
       const client = UnifiedConsentByOsanoSDK.createClient({
-        apiUrl: "https://uc.api.osano.com",
+        apiUrl: "https://uc.api.osano.com/v2",
         token:  accessToken
       });
       console.log("[Consent] ✅ Client instantiated");
 
-      // 3) Prepare consent payload
+      // 3) Build the consent payload
       const payload = {
         tags: ["terms-of-use"],
         actions: [
@@ -46,14 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         ],
         attributes: [
-          // example attribute—browser platform
+          // optional metadata—browser platform
           { platform: navigator.platform }
         ],
         subject: Subject.anonymous()
       };
       console.log("[Consent] 📦 Payload:", payload);
 
-      // 4) Send createConsent request
+      // 4) Send createConsent to /v2/consents
       const result = await client.createConsent(payload);
       console.log("[Consent] 🎉 createConsent result:", result);
 
