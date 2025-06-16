@@ -11,39 +11,53 @@ document.addEventListener("DOMContentLoaded", () => {
   agreeButton.addEventListener("click", async () => {
     console.log("[Consent] ▶️ I Agree clicked");
 
+    // Destructure the SDK exports
+    const { UnifiedConsentByOsanoSDK, Subject, ActionType } = window.unifiedConsentJsSdk || {};
+
+    if (!UnifiedConsentByOsanoSDK) {
+      console.error("[Consent] ❌ Osano SDK not loaded");
+      return;
+    }
+
     try {
-      // 1) Obtain a token
-      const token = await UnifiedConsentByOsanoSDK.getToken({
+      // 1) Get access token
+      const accessToken = await UnifiedConsentByOsanoSDK.getToken({
         issuer:     "https://uc.api.osano.com/v2/token/create",
         configId:   "8834de69-269c-45ae-a275-0e0b54cfd817",
         customerId: "AzZcpvRm9bbsqngN"
       });
-      console.log("[Consent] ✅ Token acquired:", token);
+      console.log("[Consent] ✅ Access token:", accessToken);
 
       // 2) Instantiate the client
       const client = UnifiedConsentByOsanoSDK.createClient({
-        apiUrl: "https://uc.api.osano.com/v2",
-        token
+        apiUrl: "https://uc.api.osano.com",
+        token:  accessToken
       });
       console.log("[Consent] ✅ Client instantiated");
 
-      // 3) Build and send the consent payload
+      // 3) Prepare consent payload
       const payload = {
         tags: ["terms-of-use"],
-        actions: [{
-          target: "navigation-system",
-          vendor: "general-vendor",
-          action: window.unifiedConsentJsSdk.ActionType.Accept
-        }],
-        subject:    window.unifiedConsentJsSdk.Subject.anonymous(),
-        attributes: []
+        actions: [
+          {
+            target: "navigation-system",
+            vendor: "general-vendor",
+            action: ActionType.Accept
+          }
+        ],
+        attributes: [
+          // example attribute—browser platform
+          { platform: navigator.platform }
+        ],
+        subject: Subject.anonymous()
       };
       console.log("[Consent] 📦 Payload:", payload);
 
-      const response = await client.createConsent(payload);
-      console.log("[Consent] 🎉 createConsent response:", response);
+      // 4) Send createConsent request
+      const result = await client.createConsent(payload);
+      console.log("[Consent] 🎉 createConsent result:", result);
 
-      // 4) Show success in the UI
+      // 5) Success UI update
       banner.style.display    = "none";
       statusBox.style.display = "block";
       statusBox.textContent   = "✅ Record of consent saved!";
@@ -56,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("[Consent] ❌ Error creating consent:", error);
 
-      // Show failure in the UI
+      // Error UI update
       banner.style.display    = "none";
       statusBox.style.display = "block";
-      statusBox.textContent   = "❌ Consent was not saved—see console for details.";
+      statusBox.textContent   = "❌ Consent was not saved—check console for details.";
       statusBox.style.border  = "2px solid red";
       statusBox.style.backgroundColor = "#ffe6e6";
       statusBox.style.color   = "var(--dark-gray)";
