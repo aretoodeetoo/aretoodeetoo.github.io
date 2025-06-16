@@ -10,6 +10,7 @@
   <!-- Osano Unified Consent SDK -->
   <script src="https://s.uc.osano.com/sdk/latest.min.js" crossorigin="anonymous"></script>
 
+  <!-- GPC registration -->
   <script type="text/javascript" crossorigin="anonymous">
     const { UnifiedConsentByOsanoSDK } = window.unifiedConsentJsSdk;
     if (window.navigator.globalPrivacyControl) {
@@ -38,32 +39,36 @@
   <!-- Header -->
   <header class="site-header alt-header" style="background-color: var(--cobalt);">
     <h1 class="site-title">Unified Consent</h1>
-    <p class="site-subtitle">This page demonstrates an embedded implementation of Osano’s Unified Consent Hub and the Global Privacy Control (GPC) registration process.</p>
+    <p class="site-subtitle">
+      This page demonstrates an embedded implementation of Osano’s Unified Consent Hub and the Global Privacy Control (GPC) registration process.
+    </p>
   </header>
 
   <!-- Sticky Navigation -->
-<nav class="nav sticky-nav">
-  <ul class="nav-list">
-    <li><a href="/index.html">Home</a></li>
-    <li><a href="/dsar/index.html">DSAR</a></li>
-    <li><a href="/unified-consent/index.html">Unified Consent</a></li>
-    <li class="dropdown">
-      <span class="dropdown-label">Cookie Consent ▾</span>
-      <ul class="dropdown-menu">
-        <li><a href="/cookie-consent/index.html">Module Overview</a></li>
-        <li><a href="/cookie-consent/default.html">Default</a></li>
-        <li><a href="/cookie-consent/osano-js-api-banner-suppression.html">Suppressed via JS API</a></li>
-        <li><a href="/cookie-consent/third-party-banner-suppression.html">Suppressed via Third-Party API</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+  <nav class="nav sticky-nav">
+    <ul class="nav-list">
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/dsar/index.html">DSAR</a></li>
+      <li><a href="/unified-consent/index.html">Unified Consent</a></li>
+      <li class="dropdown">
+        <span class="dropdown-label">Cookie Consent ▾</span>
+        <ul class="dropdown-menu">
+          <li><a href="/cookie-consent/index.html">Module Overview</a></li>
+          <li><a href="/cookie-consent/default.html">Default</a></li>
+          <li><a href="/cookie-consent/osano-js-api-banner-suppression.html">Suppressed via JS API</a></li>
+          <li><a href="/cookie-consent/third-party-banner-suppression.html">Suppressed via Third-Party API</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Main Content -->
   <main class="module">
     <section class="hero">
       <h2>Embedded Unified Consent Hub</h2>
-      <p>This iframe showcases how a customer might embed Osano’s Unified Consent Hub into a customer-facing portal or preference center.</p>
+      <p>
+        This iframe showcases how a customer might embed Osano’s Unified Consent Hub into a customer-facing portal or preference center.
+      </p>
     </section>
 
     <section class="embedded-form">
@@ -79,9 +84,11 @@
     </section>
 
     <script type="text/javascript" crossorigin="anonymous">
-      window.unifiedConsentJsSdk.UnifiedConsentByOsanoSDK.initEmbeddedParent({
-        targetIframe: document.getElementById('osano-uc-iframe')
-      });
+      window.unifiedConsentJsSdk
+        .UnifiedConsentByOsanoSDK
+        .initEmbeddedParent({
+          targetIframe: document.getElementById('osano-uc-iframe')
+        });
     </script>
   </main>
 
@@ -120,48 +127,68 @@
     </div>
   </footer>
 
+  <!-- Modal with Embedded Hub -->
   <div id="consent-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-button">&times;</span>
-    <iframe id="osano-uc-iframe"
-            src="https://unifiedconsent.osano.com/1034/"
-            width="100%"
-            height="400"
-            style="border:none;">
-    </iframe>
-  </div>
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <iframe
+        id="osano-uc-iframe"
+        src="https://unifiedconsent.osano.com/1034/"
+        width="100%"
+        height="400"
+        style="border:none;"
+      ></iframe>
+    </div>
   </div>
 
+  <!-- Unified Consent logic (if any) -->
   <script src="../scripts/unified-consent.js"></script>
+
+  <!-- Year updater -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
+  <!-- Modal open/close + embed logging -->
   <script>
-  const modal = document.getElementById("consent-modal");
-  const openBtn = document.getElementById("open-consent-modal");
-  const closeBtn = document.querySelector(".close-button");
+    // Modal controls
+    const modal   = document.getElementById("consent-modal");
+    const openBtn = document.getElementById("open-consent-modal");
+    const closeBtn= document.querySelector(".close-button");
 
-  openBtn.onclick = function(e) {
-    e.preventDefault();
-    modal.style.display = "block";
-  }
+    openBtn.onclick = e => {
+      e.preventDefault();
+      modal.style.display = "block";
+    };
+    closeBtn.onclick = () => { modal.style.display = "none"; };
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 
-  closeBtn.onclick = function() {
-    modal.style.display = "none";
-  }
+    // Initialize EmbeddedHandler and log consent payloads
+    const iframeEl = document.querySelector("#osano-uc-iframe");
+    const embeddedClient = window.unifiedConsentJsSdk
+      ?.UnifiedConsentByOsanoSDK
+      ?.initEmbeddedParent({ targetIframe: iframeEl });
 
-  window.onclick = function(event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
+    if (!embeddedClient) {
+      console.error("[Embedded] ❌ Unable to initialize EmbeddedParent");
+    } else {
+      embeddedClient.on(
+        window.unifiedConsentJsSdk.MessageType.CONSENT_WRITE,
+        message => {
+          console.log("[Embedded] Consent write event payload:", message.data);
+
+          embeddedClient.getUnifiedConsent()
+            .then(record => {
+              console.log("[Embedded] Fetched stored consent record:", record);
+            })
+            .catch(err => {
+              console.error("[Embedded] Error fetching consent record:", err);
+            });
+        }
+      );
     }
-  }
-
-  // Initialize Osano SDK
-  window.unifiedConsentJsSdk?.UnifiedConsentByOsanoSDK?.initEmbeddedParent?.({
-    targetIframe: document.getElementById('osano-uc-iframe')
-  });
-</script>
+  </script>
 </body>
 </html>
+
 
