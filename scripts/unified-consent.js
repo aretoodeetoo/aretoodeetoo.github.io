@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             action: window.unifiedConsentJsSdk.ActionType.Accept
           }
         ],
-        subject: window.unifiedConsentJsSdk.Subject.anonymous()
+        subject: window.unifiedConsentJsSdk.Subject.anonymous(),
+        attributes: [] // ✅ required, even if empty
       };
-
 
       console.log("Submitting consent:", payload);
       await client.createConsent(payload);
