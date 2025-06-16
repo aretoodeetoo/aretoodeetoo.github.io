@@ -11,74 +11,76 @@ document.addEventListener("DOMContentLoaded", () => {
   agreeButton.addEventListener("click", async () => {
     console.log("[Consent] ▶️ I Agree clicked");
 
-    // Destructure the SDK exports
     const { UnifiedConsentByOsanoSDK, Subject, ActionType } = window.unifiedConsentJsSdk || {};
-
     if (!UnifiedConsentByOsanoSDK) {
       console.error("[Consent] ❌ Osano SDK not loaded");
       return;
     }
 
+    // build payload outside try so we can log it on error
+    const payload = {
+      tags: ["terms-of-use"],
+      actions: [{
+        target: "navigation-system",
+        vendor: "general-vendor",
+        action: ActionType.Accept
+      }],
+      attributes: [
+        { platform: navigator.platform }
+      ],
+      subject: Subject.anonymous()
+    };
+
     try {
-      // 1) Get an access token :contentReference[oaicite:1]{index=1}
+      // — get a token
       const accessToken = await UnifiedConsentByOsanoSDK.getToken({
         issuer:     "https://uc.api.osano.com/v2/token/create",
         configId:   "8834de69-269c-45ae-a275-0e0b54cfd817",
         customerId: "AzZcpvRm9bbsqngN"
       });
-      console.log("[Consent] ✅ Access token:", accessToken);
+      console.log("[Consent] ✅ Token:", accessToken);
 
-      // 2) Instantiate the client against the v2 API :contentReference[oaicite:2]{index=2}
+      // — create the client pointed at /v2
       const client = UnifiedConsentByOsanoSDK.createClient({
         apiUrl: "https://uc.api.osano.com/v2",
         token:  accessToken
       });
-      console.log("[Consent] ✅ Client instantiated");
+      console.log("[Consent] ✅ Client ready");
 
-      // 3) Build the consent payload
-      const payload = {
-        tags: ["terms-of-use"],
-        actions: [
-          {
-            target: "navigation-system",
-            vendor: "general-vendor",
-            action: ActionType.Accept
-          }
-        ],
-        attributes: [
-          // optional metadata—browser platform
-          { platform: navigator.platform }
-        ],
-        subject: Subject.anonymous()
-      };
-      console.log("[Consent] 📦 Payload:", payload);
+      // — log the JSON we’re about to send
+      console.log("[Consent] 📦 Sending payload:", JSON.stringify(payload, null, 2));
 
-      // 4) Send createConsent to /v2/consents
+      // — fire the request
       const result = await client.createConsent(payload);
       console.log("[Consent] 🎉 createConsent result:", result);
 
-      // 5) Success UI update
+      // success UI
       banner.style.display    = "none";
       statusBox.style.display = "block";
       statusBox.textContent   = "✅ Record of consent saved!";
-      statusBox.style.border  = "2px solid var(--emerald)";
-      statusBox.style.backgroundColor = "#e6fff3";
-      statusBox.style.color   = "var(--dark-gray)";
-      statusBox.style.padding = "1rem";
-      statusBox.style.borderRadius = "8px";
+      // (apply your success styling…)
 
     } catch (error) {
+      // log the raw SDK error
       console.error("[Consent] ❌ Error creating consent:", error);
 
-      // Error UI update
+      // if it's an HTTP error from the SDK, log the details
+      if (error.response) {
+        console.error("[Consent] ➡️ Response status:", error.response.status);
+        console.error("[Consent] ➡️ Response body:", JSON.stringify(error.response.data, null, 2));
+      }
+      if (error.request) {
+        console.error("[Consent] ➡️ Request made:", error.request);
+      }
+
+      // always log the payload we sent
+      console.error("[Consent] 📦 Payload was:", JSON.stringify(payload, null, 2));
+
+      // failure UI
       banner.style.display    = "none";
       statusBox.style.display = "block";
-      statusBox.textContent   = "❌ Consent was not saved—check console for details.";
-      statusBox.style.border  = "2px solid red";
-      statusBox.style.backgroundColor = "#ffe6e6";
-      statusBox.style.color   = "var(--dark-gray)";
-      statusBox.style.padding = "1rem";
-      statusBox.style.borderRadius = "8px";
+      statusBox.textContent   = "❌ Consent was not saved—see console for details.";
+      // (apply your error styling…)
     }
   });
 });
