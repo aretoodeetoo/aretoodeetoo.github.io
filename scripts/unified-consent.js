@@ -1,70 +1,70 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ✅ Get references to HTML elements
   const agreeButton = document.getElementById("agree-btn");
-  const banner = document.getElementById("consent-banner");
-  const statusBox = document.getElementById("consent-status");
+  const banner      = document.getElementById("consent-banner");
+  const statusBox   = document.getElementById("consent-status");
 
-  // ✅ Only add event listener if button exists
   if (!agreeButton) {
-    console.error("Could not find #agree-btn in the DOM.");
+    console.error("[Consent] ❌ #agree-btn not found in DOM");
     return;
   }
 
-  // ✅ Handle click
   agreeButton.addEventListener("click", async () => {
-    const sdk = window.unifiedConsentJsSdk?.UnifiedConsentByOsanoSDK;
-    if (!sdk) {
-      console.error("Unified Consent SDK is not loaded.");
-      return;
-    }
+    console.log("[Consent] ▶️ I Agree clicked");
 
     try {
-      const token = await sdk.getToken({
-        issuer: "https://uc.api.osano.com/v2/token/create",
-        configId: "8834de69-269c-45ae-a275-0e0b54cfd817",
+      // 1) Obtain a token
+      const token = await UnifiedConsentByOsanoSDK.getToken({
+        issuer:     "https://uc.api.osano.com/v2/token/create",
+        configId:   "8834de69-269c-45ae-a275-0e0b54cfd817",
         customerId: "AzZcpvRm9bbsqngN"
       });
+      console.log("[Consent] ✅ Token acquired:", token);
 
-      const client = sdk.createClient({
-        token,
-        apiUrl: "https://uc.api.osano.com/v2"
+      // 2) Instantiate the client
+      const client = UnifiedConsentByOsanoSDK.createClient({
+        apiUrl: "https://uc.api.osano.com/v2",
+        token
       });
+      console.log("[Consent] ✅ Client instantiated");
 
+      // 3) Build and send the consent payload
       const payload = {
         tags: ["terms-of-use"],
-        actions: [
-          {
-            target: "navigation-system",
-            vendor: "general-vendor",
-            action: window.unifiedConsentJsSdk.ActionType.Accept
-          }
-        ],
-        subject: window.unifiedConsentJsSdk.Subject.anonymous(),
-        attributes: [] // ✅ required, even if empty
+        actions: [{
+          target: "navigation-system",
+          vendor: "general-vendor",
+          action: window.unifiedConsentJsSdk.ActionType.Accept
+        }],
+        subject:    window.unifiedConsentJsSdk.Subject.anonymous(),
+        attributes: []
       };
+      console.log("[Consent] 📦 Payload:", payload);
 
-      console.log("Submitting consent:", payload);
-      await client.createConsent(payload);
+      const response = await client.createConsent(payload);
+      console.log("[Consent] 🎉 createConsent response:", response);
 
-      banner.style.display = "none";
+      // 4) Show success in the UI
+      banner.style.display    = "none";
       statusBox.style.display = "block";
-      statusBox.textContent = "✅ Record of consent saved!";
-      statusBox.style.border = "2px solid var(--emerald)";
+      statusBox.textContent   = "✅ Record of consent saved!";
+      statusBox.style.border  = "2px solid var(--emerald)";
       statusBox.style.backgroundColor = "#e6fff3";
-      statusBox.style.color = "var(--dark-gray)";
-      statusBox.style.padding = "1rem";
-      statusBox.style.borderRadius = "8px";
-    } catch (error) {
-      banner.style.display = "none";
-      statusBox.style.display = "block";
-      statusBox.textContent = "❌ Consent was not saved... let the troubleshooting commence.";
-      statusBox.style.border = "2px solid red";
-      statusBox.style.backgroundColor = "#ffe6e6";
-      statusBox.style.color = "var(--dark-gray)";
+      statusBox.style.color   = "var(--dark-gray)";
       statusBox.style.padding = "1rem";
       statusBox.style.borderRadius = "8px";
 
-      console.error("Consent submission failed:", error);
+    } catch (error) {
+      console.error("[Consent] ❌ Error creating consent:", error);
+
+      // Show failure in the UI
+      banner.style.display    = "none";
+      statusBox.style.display = "block";
+      statusBox.textContent   = "❌ Consent was not saved—see console for details.";
+      statusBox.style.border  = "2px solid red";
+      statusBox.style.backgroundColor = "#ffe6e6";
+      statusBox.style.color   = "var(--dark-gray)";
+      statusBox.style.padding = "1rem";
+      statusBox.style.borderRadius = "8px";
     }
   });
 });
