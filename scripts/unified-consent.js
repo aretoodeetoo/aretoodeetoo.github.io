@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }],
       attributes:
         { platform: navigator.platform },
-      subject: Subject.anonymous()
     };
 
     try {
