@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       actions: [{
         target: "971be3f6-30dc-4f0e-b555-74473528d3c0",
         vendor: "b9e8f271-1011-4f74-ac59-c5a2a22ffcd7",
-        action: ActionType.Accept
+        action: "ACCEPT"
       }],
       attributes:
         { platform: navigator.platform },
