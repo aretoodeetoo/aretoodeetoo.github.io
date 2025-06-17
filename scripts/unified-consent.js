@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // build payload outside try so we can log it on error
     const payload = {
-        tags: ["terms-of-use"],
+        tags: [],
           compliance: {
           privacyPolicy: {
             version: "1.2",
-            url: "010203"
+            url: "https://www.osano.com/privacy/"
             },
            gpc: 0
         },
@@ -32,9 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
         vendor: "b9e8f271-1011-4f74-ac59-c5a2a22ffcd7",
         action: ActionType.Accept
       }],
-      attributes: [
-        { platform: navigator.platform }
-      ],
+      attributes:
+        { platform: navigator.platform },
       subject: Subject.anonymous()
     };
 
