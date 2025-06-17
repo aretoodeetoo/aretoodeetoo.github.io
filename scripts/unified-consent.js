@@ -19,10 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // build payload outside try so we can log it on error
     const payload = {
-      tags: ["terms-of-use"],
+        tags: ["terms-of-use"],
+          compliance: {
+          privacyPolicy: {
+            version: "1.2",
+            url: "010203"
+            },
+           gpc: 0
+        },
       actions: [{
-        target: "navigation-system",
-        vendor: "general-vendor",
+        target: "971be3f6-30dc-4f0e-b555-74473528d3c0",
+        vendor: "b9e8f271-1011-4f74-ac59-c5a2a22ffcd7",
         action: ActionType.Accept
       }],
       attributes: [
@@ -35,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // — get a token
       const accessToken = await UnifiedConsentByOsanoSDK.getToken({
         issuer:     "https://uc.api.osano.com/v2/token/create",
-        configId:   "8834de69-269c-45ae-a275-0e0b54cfd817",
+        configId:   "b9e8f271-1011-4f74-ac59-c5a2a22ffcd7",
         customerId: "AzZcpvRm9bbsqngN"
       });
       console.log("[Consent] ✅ Token:", accessToken);
