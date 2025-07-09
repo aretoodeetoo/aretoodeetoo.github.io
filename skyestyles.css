@@ -1,4 +1,4 @@
 /* Hide elements with the Osano location select class */
-.osano-form__location-select.osano-location-select {
+.osano-form__location-select .osano-location-select {
   display: none !important;
 }
